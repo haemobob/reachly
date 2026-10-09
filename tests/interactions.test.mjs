@@ -198,7 +198,7 @@ test('comparison headline, image and footer have separate layout slots', () => {
   const dom = new JSDOM(read('dist/index.html'));
   try {
     const doc = dom.window.document;
-    const style = doc.createElement('style'); style.textContent = read('dist/style.css'); doc.head.append(style);
+    const style = doc.createElement('style'); style.textContent = (read('dist/style.css') + '\n' + read('dist/arena.css')); doc.head.append(style);
     const site = doc.querySelector('.after-site');
     const content = doc.querySelector('.after-content');
     const title = doc.querySelector('.after-title');
@@ -218,7 +218,7 @@ test('hero clips transformed artwork while keeping instructions outside its pain
   const dom = new JSDOM(read('dist/index.html'));
   try {
     const doc = dom.window.document; const style = doc.createElement('style');
-    style.textContent = read('dist/style.css'); doc.head.append(style);
+    style.textContent = (read('dist/style.css') + '\n' + read('dist/arena.css')); doc.head.append(style);
     const computed = e => dom.window.getComputedStyle(e);
     const stage = doc.querySelector('.hero-stage');
     assert.equal(computed(stage).overflow, 'clip');
@@ -251,7 +251,7 @@ test('distinct section transitions register, revert on pause and resume without 
 });
 
 test('services retain readable text contrast on the cream surface', () => {
-  const css = read('dist/style.css');
+  const css = (read('dist/style.css') + '\n' + read('dist/arena.css'));
   const tokens = new Map([...css.matchAll(/(--[\w-]+):\s*(#[0-9a-fA-F]{6})/g)].map(m => [m[1], m[2]]));
   const luminance = hex => {
     const channels = [1, 3, 5].map(i => parseInt(hex.slice(i, i + 2), 16) / 255).map(c => c <= .04045 ? c / 12.92 : ((c + .055) / 1.055) ** 2.4);

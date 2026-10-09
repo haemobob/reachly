@@ -7,7 +7,7 @@ import { frameOrbits } from '../dist/orb.js';
 const root = resolve(import.meta.dirname, '..');
 const html = readFileSync(resolve(root, 'dist/index.html'), 'utf8');
 const js = readFileSync(resolve(root, 'dist/app.js'), 'utf8');
-const css = readFileSync(resolve(root, 'dist/style.css'), 'utf8');
+const css = ['dist/style.css', 'dist/arena.css'].map(path => readFileSync(resolve(root, path), 'utf8')).join('\n');
 
 test('all local page resources exist and have content', () => {
   const refs = [...html.matchAll(/(?:src|href)="([^"#]+)"/g)].map(m => m[1]).filter(path => !/^https?:/.test(path));

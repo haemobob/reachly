@@ -1,0 +1,42 @@
+/* Reachly identity, Arena-inspired editorial composition. Component details stay in style.css. */
+:root {
+  --paper: #FAF7F0;
+  --ink: #05100E;
+  --lime: #D4E751;
+  --green: #17463A;
+  --white: #FFFFFF;
+  --orange: var(--lime);
+  --muted: #17463A;
+  --text-secondary: #17463A;
+  --accent-readable: #17463A;
+  --on-dark: #FAF7F0;
+  --line: #A8B0A4;
+  --line-dark: #7D938A;
+  --gutter: clamp(20px, 4vw, 64px);
+  --space-section: clamp(64px, 7vw, 112px);
+}
+body { background: var(--paper); color: var(--ink); font-size: 16px; line-height: 1.7; }
+.header, .hero, .section-pad, .footer { padding-left: var(--gutter); padding-right: var(--gutter); }
+.section-pad { padding-top: var(--space-section); padding-bottom: var(--space-section); }
+.header { position: relative; top: auto; height: 88px; background: var(--paper); border-bottom: 1px solid var(--ink); backdrop-filter: none; }
+.logo { display: inline-flex; align-items: center; flex-shrink: 0; padding: 12px 0; line-height: 1; }
+.logo img { width: 172px; max-width: 100%; height: auto; object-fit: contain; }
+.desktop-nav { font-size: 13px; font-weight: 700; gap: 26px; }
+.nav-cta { min-height: 44px; background: var(--ink); color: var(--paper); border: 1px solid var(--ink); }
+.nav-cta:hover, .nav-cta:focus-visible { background: var(--lime); color: var(--ink); }
+.button.dark { background: var(--ink); color: var(--paper); border: 1px solid var(--ink); border-radius: 0; }
+.button.dark:hover, .button.dark:focus-visible { background: var(--lime); color: var(--ink); }
+button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visible { outline: 2px solid var(--green); outline-offset: 4px; }
+.footer { background: var(--ink); color: var(--paper); }
+.footer a:focus-visible, .footer button:focus-visible { outline-color: var(--lime); }
+@media(max-width:740px) {
+  .header { height: 76px; gap: 8px; }
+  .logo img { width: 128px; }
+  .nav-cta { margin-left: auto; margin-right: 0; padding: 10px 12px; font-size: 10px; }
+  .menu-toggle { width: 44px; height: 44px; flex-shrink: 0; }
+  .mobile-menu { top: 76px; background: var(--paper); color: var(--ink); }
+}
+@media(max-width:380px) {
+  .logo img { width: 112px; }
+  .header .nav-cta { padding: 10px 8px; font-size: 9px; max-width: 100px; white-space: normal; line-height: 1.25; }
+}
