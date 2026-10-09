@@ -25,16 +25,28 @@ for (const motion of ['reduce', 'no-preference']) {
           deviceRight: device.right, stageRight: stage.right,
           deviceBottom: device.bottom, stageBottom: stage.bottom,
           overflow: document.documentElement.scrollWidth > innerWidth + 1,
-          lines: [...hero.querySelectorAll('.hero-line')].map(line => {
+          // Three visual lines: the second span deliberately contains a block em.
+          lines: [hero.querySelector('.hero-line').firstChild,
+            hero.querySelector('.hero-second').firstChild,
+            hero.querySelector('.hero-second em').firstChild].map(text => {
             const range = document.createRange();
-            range.selectNodeContents(line);
-            return { height: range.getBoundingClientRect().height, lineHeight: parseFloat(getComputedStyle(line).lineHeight) };
-          })
+            range.selectNode(text);
+            return { height: range.getBoundingClientRect().height, lineHeight: parseFloat(getComputedStyle(text.parentElement).lineHeight) };
+          }),
+          heroWidth: hero.getBoundingClientRect().width,
+          heroLeft: hero.getBoundingClientRect().left,
+          heroRight: hero.getBoundingClientRect().right,
+          stageLeft: stage.left
         };
       });
       expect.soft(geometry.ratio, `${width}px phone ratio`).toBeGreaterThan(0.42);
       expect.soft(geometry.ratio, `${width}px phone ratio`).toBeLessThan(0.48);
-      expect.soft(geometry.contentWidth, `${width}px bounded hero content`).toBeLessThanOrEqual(1601);
+      expect.soft(geometry.heroWidth, `${width}px bounded poster frame`).toBeLessThanOrEqual(1761);
+      expect.soft(geometry.heroLeft).toBeGreaterThanOrEqual(0);
+      expect.soft(geometry.heroRight).toBeLessThanOrEqual(width);
+      expect.soft(geometry.stageLeft).toBeGreaterThanOrEqual(geometry.heroLeft);
+      expect.soft(geometry.stageRight).toBeLessThanOrEqual(geometry.heroRight);
+      expect(geometry.lines).toHaveLength(3);
       expect.soft(geometry.deviceRight, `${width}px phone right edge`).toBeLessThanOrEqual(geometry.stageRight - 1);
       expect.soft(geometry.deviceBottom, `${width}px phone bottom edge`).toBeLessThanOrEqual(geometry.stageBottom - 1);
       expect.soft(geometry.overflow, `${width}px page overflow`).toBe(false);

@@ -1,4 +1,4 @@
-import { pointerPose, processStages } from './model.js';
+import { pointerPose } from './model.js';
 
 // ScrollTrigger is progressively enhanced; the entire page is readable without it.
 // The gooey line filter and image spots adapt the two supplied Drive components.
@@ -53,16 +53,11 @@ export function setupMotion({ motion, getComparisonManual, setComparison }) {
         scrollTrigger: { trigger: '.project-grid', start: 'top 90%', end: 'top 40%', scrub: .3 }
       });
       if (context.conditions.desktop) {
-        gsap.fromTo('.process-rail > span', { scaleY: 0 }, { scaleY: 1, ease: 'none',
-          scrollTrigger: { trigger: '.process-track', start: 'top 52%', end: 'bottom 52%', scrub: .25 }
+        // This is section-reading progress, not a current business stage.
+        // The stages share a row; vertical entry cannot select them in sequence.
+        gsap.fromTo('.process-rail > span', { scaleX: 0 }, { scaleX: 1, ease: 'none',
+          scrollTrigger: { trigger: '.process-track', start: 'top 75%', end: 'bottom 25%', scrub: .25 }
         });
-        const steps = $$('.process-step');
-        function activate(i) {
-          steps.forEach((el, index) => el.classList.toggle('active', i === index));
-          $('#process-count').textContent = String(i + 1).padStart(2, '0');
-          $('#process-name').textContent = processStages[i].toUpperCase();
-        }
-        steps.forEach((el, i) => ScrollTrigger.create({ trigger: el, start: 'top 55%', end: 'bottom 55%', onEnter: () => activate(i), onEnterBack: () => activate(i) }));
       }
       if (context.conditions.pointer) {
         $$('.spotlight-button').forEach(button => {

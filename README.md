@@ -38,11 +38,13 @@ https://reachly-studio.craftymaple16.chatgpt.site
 
 ## Interactions
 
-- Drag the hero collage, rotate it with arrow keys, or click / press Enter to change its illustrative concept.
+- Explore the framed poster hero: drag/arrow-key rotation and click/Enter concept changes preserve the browser and phone previews.
+- Browse four confirmed client sites in the horizontal project rail using touch, keyboard links or previous/next controls.
+- Open the full-screen menu at any width; background interaction is isolated, focus is contained, and Escape returns to the close control.
 - The short brand statement uses the supplied Drive gooey text reveal and expanding image-spot components, adapted to vanilla HTML/JS. Each spot is a button with an accessible name that selects its concept on click, tap, or keyboard activation.
 - The before/after range is assisted by scroll until the visitor takes control; manual input remains authoritative for the page visit.
 - Five service tabs update the narrative, diagram, tags, and project-planner goal. Service and concept tabs support roving focus, arrows, Home, and End.
-- Concept photography opens through a scroll aperture. The five-stage process follows Discover, Plan, Create, Launch, Improve, with a sticky desktop summary and progress rail. Mobile shows every step in ordinary flow.
+- Concept photography opens through a scroll aperture. The five-stage process follows Discover, Plan, Create, Launch, Improve, with a responsive timeline and progress rail. Every step remains in ordinary flow.
 - Pause motion saves a local preference and removes GSAP triggers and styles. System reduced motion takes precedence. Meaningful content is readable without JavaScript or GSAP.
 - The project planner validates fields, recovers a local draft, exports plain text, supports clipboard copying, and offers draft erasure. **It does not send an inquiry.**
 
@@ -54,9 +56,9 @@ Reusable software, AI-assisted tools, productized automation, Meta Ads, and deep
 
 ## Validation
 
-Thirty-three Node tests check actual simulated-DOM interactions, service selection, keyboard tabs, concept buttons, local brief handling, privacy erasure, visitor text safety, real GSAP initialization and cleanup, asset integrity, navigation, company scope, bounded mouse poses, and deterministic orb geometry. Parsed HTML/CSS and ES-module syntax checks run separately. Real Chromium adds 87 passing checks across 320, 375, 768, 1024, and 1440px, with three expected desktop skips for the mobile menu. GitHub Actions is configured to run both suites and retain screenshot evidence on pushes and pull requests.
+Node tests check actual simulated-DOM interactions, structural rebuilding, local privacy, company facts, motion cleanup and exact asset copies. Real Chromium checks the rebuilt menu, native project rail, planner and responsive layout at 320, 375, 768, 1024 and 1440px; dedicated normal/reduced-motion tests extend hero scaling through 3840px. Parsed HTML/CSS and module syntax are checked separately. `docs/design/qa.md` records exact current results. GitHub Actions is configured to run the suites and retain evidence, but no hosted run is claimed.
 
-Local Chromium verification now covers real layout, keyboard controls, clipboard/download, privacy erasure, no-JavaScript and blocked-GSAP fallbacks, and motion lifecycle. Screenshots are saved under `.artifacts/arena/`. See `docs/design/qa.md` for exact results and visual-review limits. Physical devices, screen readers, production hosting, and measured Web Vitals are not verified by this suite.
+Local Chromium verification now covers real layout, keyboard controls, clipboard/download, privacy erasure, no-JavaScript and blocked-GSAP fallbacks, and motion lifecycle. Screenshots are saved under `.artifacts/arena/` and `.artifacts/rebuild/`; matching-width original/rebuilt captures include 320, 1440 and 2560px. See `docs/design/qa.md` for exact results and visual-review limits. Physical devices, screen readers, production hosting, and measured Web Vitals are not verified by this suite.
 
 ## References and licenses
 
@@ -68,6 +70,6 @@ Local Chromium verification now covers real layout, keyboard controls, clipboard
 - Concept photography is from Unsplash photo IDs `photo-1442512595331-e89e73853f31`, `photo-1494438639946-1ebd1d20bf85`, and `photo-1490750967868-88aa4486c946`.
 - Locally hosted Barlow Condensed and Manrope font license notices accompany the assets.
 
-The current UI uses contained concept artwork and two distinct section-boundary scroll effects. Design sources and verification limits are recorded in `DESIGN_NOTES.md`.
+The current UI replaces the old page composition and legacy stylesheet, retaining contained concept artwork and existing motion fallbacks. Design sources and verification limits are recorded in `DESIGN_NOTES.md`.
 
 Browser and mobile concept previews are retained by owner preference. Services text is contrast checked; scroll transitions reveal actual portfolio content.

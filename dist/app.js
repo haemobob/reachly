@@ -53,15 +53,51 @@ $$('dialog').forEach(dialog => {
 
 const menuToggle = $('.menu-toggle');
 const menu = $('#mobile-menu');
-function closeMenu() { if (menu.contains(document.activeElement)) menuToggle.focus(); menu.classList.remove('open'); menu.inert = true; menuToggle.setAttribute('aria-expanded', 'false'); menuToggle.setAttribute('aria-label', 'Open menu'); }
+const menuBackground = $$('main, .footer, .header');
+function closeMenu() {
+  const restoreFocus = menu.contains(document.activeElement);
+  menuBackground.forEach(el => { el.inert = false; });
+  if (restoreFocus) menuToggle.focus({ preventScroll: true });
+  menu.classList.remove('open'); menu.inert = true;
+  document.body.classList.remove('menu-open');
+  menuToggle.setAttribute('aria-expanded', 'false'); menuToggle.setAttribute('aria-label', 'Open menu');
+}
 menuToggle.addEventListener('click', () => {
-  const open = menuToggle.getAttribute('aria-expanded') !== 'true';
-  menuToggle.setAttribute('aria-expanded', String(open)); menuToggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu'); menu.classList.toggle('open', open); menu.inert = !open;
+  if (menuToggle.getAttribute('aria-expanded') === 'true') { closeMenu(); return; }
+  menuToggle.setAttribute('aria-expanded', 'true'); menuToggle.setAttribute('aria-label', 'Close menu');
+  menu.classList.add('open'); menu.inert = false;
+  menuBackground.forEach(el => { el.inert = true; });
+  document.body.classList.add('menu-open');
+  $('a', menu).focus();
 });
+$('.menu-close', menu).addEventListener('click', closeMenu);
 $$('a', menu).forEach(a => a.addEventListener('click', closeMenu));
-document.addEventListener('keydown', event => { if (event.key === 'Escape') closeMenu(); });
+document.addEventListener('keydown', event => {
+  if (event.key === 'Escape') closeMenu();
+  if (event.key !== 'Tab' || menu.inert) return;
+  const controls = $$('a, button', menu);
+  const index = controls.indexOf(document.activeElement);
+  const next = (index + (event.shiftKey ? -1 : 1) + controls.length) % controls.length;
+  event.preventDefault(); controls[next].focus();
+});
 const mobile = matchMedia('(max-width: 740px)');
 mobile.addEventListener('change', closeMenu);
+
+// Native scrolling also works by touch and keyboard when JavaScript is unavailable.
+const projectRail = $('#project-rail');
+const railButtons = $$('[data-rail-dir]');
+function syncRailButtons() {
+  const end = projectRail.scrollWidth - projectRail.clientWidth;
+  railButtons.forEach(button => { button.disabled = Number(button.dataset.railDir) < 0 ? projectRail.scrollLeft <= 5 : projectRail.scrollLeft >= end - 5; });
+}
+railButtons.forEach(button => button.addEventListener('click', () => {
+  const card = $('.project-card', projectRail);
+  const step = card.getBoundingClientRect().width + parseFloat(getComputedStyle(projectRail).gap);
+  projectRail.scrollBy({ left: Number(button.dataset.railDir) * step, behavior: reducedMotion.matches ? 'auto' : 'smooth' });
+}));
+projectRail.addEventListener('scroll', syncRailButtons, { passive: true });
+addEventListener('resize', syncRailButtons);
+syncRailButtons();
 
 // Shared tab behavior: selection, roving focus, and arrow-key navigation.
 function setupTabs(selector, update, vertical = false) {

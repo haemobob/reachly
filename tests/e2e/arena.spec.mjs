@@ -317,31 +317,28 @@ test('design: editorial hero hierarchy with contained device previews', async ({
   const stage = await page.locator('.hero-stage').boundingBox();
   const caption = await page.locator('.hero-demo-caption').boundingBox();
   expect(caption.y).toBeGreaterThanOrEqual(stage.y + stage.height);
-  if (page.viewportSize().width >= 1000) {
-    const title = await page.locator('#hero-title').boundingBox();
-    expect(stage.x).toBeGreaterThan(title.x + title.width - 1);
-    expect(Math.abs(stage.y - title.y)).toBeLessThan(8);
-  }
+  // Poster composition intentionally offsets the stage vertically from the title.
+  const hero = await page.locator('.hero').boundingBox();
+  expect(stage.x).toBeGreaterThanOrEqual(hero.x);
+  expect(stage.x + stage.width).toBeLessThanOrEqual(hero.x + hero.width);
+  expect(stage.y).toBeGreaterThanOrEqual(hero.y);
+  expect(caption.y + caption.height).toBeLessThanOrEqual(hero.y + hero.height);
 });
 
-test('design: intentional surface rhythm and offset client work', async ({ page }) => {
+test('design: intentional surface rhythm and horizontal client work', async ({ page }) => {
   await page.goto('/');
   await expect(page.locator('.services')).toHaveCSS('background-color', 'rgb(250, 247, 240)');
-  await expect(page.locator('.portfolio')).toHaveCSS('background-color', 'rgb(5, 16, 14)');
+  await expect(page.locator('.project-card').first()).toHaveCSS('background-color', 'rgb(250, 247, 240)');
   await expect(page.locator('.process')).toHaveCSS('background-color', 'rgb(23, 70, 58)');
-  await expect(page.locator('.contact')).toHaveCSS('background-color', 'rgb(212, 231, 81)');
+  await expect(page.locator('.contact')).toHaveCSS('background-color', 'rgb(5, 16, 14)');
   await expect(page.locator('.footer')).toHaveCSS('background-color', 'rgb(5, 16, 14)');
   await expect(page.locator('.project-card')).toHaveCount(4);
   await expect(page.locator('.project-browser-bar')).toHaveCount(4);
   const first = await page.locator('.project-card').nth(0).boundingBox();
   const second = await page.locator('.project-card').nth(1).boundingBox();
-  if (page.viewportSize().width > 740) {
-    expect(second.x).toBeGreaterThan(first.x + first.width - 1);
-    expect(Math.round(second.y - first.y)).toBe(88);
-  } else {
-    expect(Math.abs(second.x - first.x)).toBeLessThan(1);
-    expect(second.y).toBeGreaterThan(first.y + first.height);
-  }
+  expect(second.x).toBeGreaterThan(first.x + first.width - 1);
+  expect(Math.abs(second.y - first.y)).toBeLessThan(1);
+  expect(await page.locator('#project-rail').evaluate(el => el.scrollWidth > el.clientWidth)).toBe(true);
 });
 
 test('design: planner uses brand surfaces and usable close targets', async ({ page }) => {
@@ -374,18 +371,21 @@ test('design: unselected services and process numbers remain readable', async ({
 test('design: miniature browser footer does not overlap its action', async ({ page }) => {
   await page.goto('/');
   await page.evaluate(() => document.fonts.ready);
-  const gap = await page.locator('.coffee-site').evaluate(site => {
-    const pill = site.querySelector('.mock-pill').getBoundingClientRect();
-    const footer = site.querySelector('.mock-footer').getBoundingClientRect();
-    return footer.top - pill.bottom;
-  });
-  expect(gap).toBeGreaterThanOrEqual(3);
+  for (let concept = 0; concept < 3; concept++) {
+    const gap = await page.locator('.coffee-site').evaluate(site => {
+      const pill = site.querySelector('.mock-pill').getBoundingClientRect();
+      const footer = site.querySelector('.mock-footer').getBoundingClientRect();
+      return footer.top - pill.bottom;
+    });
+    expect(gap, `concept ${concept + 1} footer gap`).toBeGreaterThanOrEqual(3);
+    await page.locator('.hero-stage').press('Enter');
+  }
 });
 
 test('visual evidence: no page overflow and section screenshots', async ({ page }, testInfo) => {
   await page.goto('/');
   await page.evaluate(() => document.fonts.ready);
-  const sections = ['.header', '.hero', '.manifesto', '.approach', '.services', '.portfolio', '.work', '.process', '.faq', '.contact', '.footer'];
+  const sections = ['.header', '.hero', '.portfolio', '.manifesto', '.services', '.work', '.approach', '.process', '.faq', '.contact', '.footer'];
   mkdirSync('.artifacts/arena', { recursive: true });
   for (const selector of sections) {
     const section = page.locator(selector);

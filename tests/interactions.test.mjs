@@ -140,7 +140,9 @@ test('GSAP registers effects, yields comparison to input, and cleans up on pause
   const env = load({ enhanced: true }); const { w, doc } = env;
   try {
     assert.ok(doc.body.classList.contains('gsap-active'));
-    assert.ok(w.ScrollTrigger.getAll().length >= 9);
+    ['.comparison', '.concept-image', '.portfolio', '.project-grid', '.process-track'].forEach(target => {
+      assert.ok(w.ScrollTrigger.getAll().some(t => t.vars.trigger === target), target + ': effect registered');
+    });
     const range = doc.querySelector('#compare-range');
     range.value = '35'; range.dispatchEvent(new w.Event('input'));
     const comparison = w.ScrollTrigger.getAll().find(t => t.vars.trigger === '.comparison');
@@ -152,7 +154,9 @@ test('GSAP registers effects, yields comparison to input, and cleans up on pause
     assert.equal(doc.querySelector('.goo-inner').style.filter, '');
     assert.equal(w.localStorage.getItem('reachly-motion-paused'), 'true');
     doc.querySelector('#motion-toggle').click();
-    assert.ok(w.ScrollTrigger.getAll().length >= 9);
+    ['.comparison', '.concept-image', '.portfolio', '.project-grid', '.process-track'].forEach(target => {
+      assert.ok(w.ScrollTrigger.getAll().some(t => t.vars.trigger === target), target + ': effect registered');
+    });
   } finally { env.close(); }
 });
 
