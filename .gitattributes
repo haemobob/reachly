@@ -1,0 +1,3 @@
+# Preserve approved source artwork and runtime copies byte-for-byte.
+brand/Reachly-Brand-Kit/** -text
+dist/assets/brand/** -text
