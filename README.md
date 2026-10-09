@@ -8,7 +8,7 @@ An English-language website for Reachly’s Indonesian SME services: website des
 
 The deployable static website is in `dist/`. HTML, CSS, native ES modules, and locally vendored GSAP require **no build step**. All photos, fonts, and runtime scripts are local. Node dependencies are development-only: testing and SkillUI reference extraction. They are not served or installed in production.
 
-For local checks, use Node 24 and Python 3.12:
+For local checks, use Node 24.15+ (on the Node 24 line) and Python 3.12:
 
 ```sh
 npm ci

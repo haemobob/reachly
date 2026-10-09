@@ -41,6 +41,11 @@ Decide/Learn surface. No tech gradient, generic indigo, feature-tile filler, acc
 
 Self-evaluation: accuracy 4 (local evidence strong; hosted CI not run), completeness 4 (tooling/extraction/brand/layout/behavior delivered; owner visual acceptance pending), clarity 4 (reproducible docs; historical design notes retain old context), actionability 4 (live local preview and commands; no remote publication), conciseness 4 (small production override, extensive tests/tooling lockfile). Average 4.0/5.
 
+## Independent Ponytail review
+Read-only review through `9e3a8e7` and the subsequent unused-selector cleanup found no must-fix or should-fix issues. It examined connected markup/CSS, application motion/dialog code, development-only lockfile, deployment output, asset hashes, CI and tests. Reviewer independently ran all 33 Node tests, Python validation, runtime syntax checks and npm audit. Browser suite was not duplicated by the reviewer; the parent executed and aggregated its final report.
+
+Confirmed: no runtime JavaScript or Vercel configuration changes; `npm ls --omit=dev` is empty. The jsdom dependency requires Node 24.15+ on the Node 24 line (`^22.22.2 || ^24.15.0 || >=26.0.0`); README now states the supported minimum and CI's `24` selector installs the latest release on that line. Actual Ubuntu/Node24/Python3.12 CI execution remains unverified until the branch is pushed.
+
 ## Limits
 No measured production Web Vitals, physical-device touch/performance testing, full axe/screen-reader audit, Firefox/Safari verification or hosted deployment validation. No prior approved visual baselines exist, so pixel-diff visual regression is INCONCLUSIVE; these captures are review evidence, not a claimed baseline pass. CI configuration is written/tested locally, not remotely exercised.
 
