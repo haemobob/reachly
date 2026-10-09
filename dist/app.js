@@ -1,8 +1,29 @@
 import { services, concepts, clamp, buildBrief } from './model.js';
 import { startOrb } from './orb.js';
+import { setupMotion } from './motion.js';
 const $ = (q, node = document) => node.querySelector(q);
 const $$ = (q, node = document) => [...node.querySelectorAll(q)];
-const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
+const systemMotion = matchMedia('(prefers-reduced-motion: reduce)');
+const reducedMotion = new EventTarget();
+let motionPaused = false;
+try { motionPaused = localStorage.getItem('reachly-motion-paused') === 'true'; } catch {}
+const motionButton = $('#motion-toggle');
+function syncMotion() {
+  reducedMotion.matches = systemMotion.matches || motionPaused;
+  document.body.classList.toggle('motion-paused', reducedMotion.matches);
+  document.body.classList.toggle('motion-enabled', !reducedMotion.matches);
+  motionButton.setAttribute('aria-pressed', String(reducedMotion.matches));
+  motionButton.disabled = systemMotion.matches;
+  motionButton.textContent = systemMotion.matches ? 'Reduced motion on' : motionPaused ? 'Resume motion' : 'Pause motion';
+  const event = new Event('change'); event.matches = reducedMotion.matches; reducedMotion.dispatchEvent(event);
+}
+systemMotion.addEventListener('change', syncMotion);
+motionButton.addEventListener('click', () => {
+  motionPaused = !motionPaused;
+  try { localStorage.setItem('reachly-motion-paused', String(motionPaused)); } catch {}
+  syncMotion();
+});
+syncMotion();
 if (!reducedMotion.matches) document.body.classList.add('motion-enabled');
 $('#year').textContent = new Date().getFullYear();
 
@@ -11,7 +32,14 @@ const projectDialog = $('#project-dialog');
 const privacyDialog = $('#privacy-dialog');
 let lastFocus;
 function openDialog(dialog) { lastFocus = document.activeElement; dialog.showModal(); }
-$$('.project-open').forEach(button => button.addEventListener('click', () => { closeMenu(); openDialog(projectDialog); }));
+$$('.project-open').forEach(button => button.addEventListener('click', () => {
+  if (button.dataset.goal) {
+    const goal = $$('input[name="goals"]').find(el => el.value === button.dataset.goal);
+    if (goal) { goal.checked = true; form.dispatchEvent(new Event('input')); }
+    form.hidden = false; $('.planner-intro').hidden = false; $('#brief-result').hidden = true;
+  }
+  closeMenu(); openDialog(projectDialog);
+}));
 $('.privacy-open').addEventListener('click', () => openDialog(privacyDialog));
 $$('dialog').forEach(dialog => {
   $('.dialog-close', dialog).addEventListener('click', () => dialog.close());
@@ -25,7 +53,7 @@ $$('dialog').forEach(dialog => {
 
 const menuToggle = $('.menu-toggle');
 const menu = $('#mobile-menu');
-function closeMenu() { menu.classList.remove('open'); menu.inert = true; menuToggle.setAttribute('aria-expanded', 'false'); menuToggle.setAttribute('aria-label', 'Open menu'); }
+function closeMenu() { if (menu.contains(document.activeElement)) menuToggle.focus(); menu.classList.remove('open'); menu.inert = true; menuToggle.setAttribute('aria-expanded', 'false'); menuToggle.setAttribute('aria-label', 'Open menu'); }
 menuToggle.addEventListener('click', () => {
   const open = menuToggle.getAttribute('aria-expanded') !== 'true';
   menuToggle.setAttribute('aria-expanded', String(open)); menuToggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu'); menu.classList.toggle('open', open); menu.inert = !open;
@@ -56,16 +84,27 @@ function setupTabs(selector, update, vertical = false) {
   });
   return select;
 }
-setupTabs('.service-tab', index => {
+const serviceArt = [
+  '<div class="art-window"><div class="art-top">yourbusiness.com <span>↗</span></div><div class="art-headline">HELLO,<br><em>WORLD.</em></div><div class="art-grid"><i></i><i></i><i></i></div><div class="art-line"></div></div><span class="art-sticker">YOUR<br>STORY.</span>',
+  '<div class="presence-art"><div class="presence-orbit"></div><div class="presence-center">your brand</div><span class="presence-node">Website</span><span class="presence-node">Business profile</span><span class="presence-node">Social channels</span></div>',
+  '<div class="roadmap-art"><span class="roadmap-label">A PLAN WITH PURPOSE.</span><div class="roadmap-title">FIRST THINGS<br>FIRST.</div><div class="roadmap-path"><b>Clarify</b><i></i><b>Prioritize</b><i></i><b>Create</b></div><div class="roadmap-foot"><span>YOUR GOALS</span><span>YOUR NEXT STEP ↗</span></div></div>',
+  '<div class="workflow-art"><div class="workflow-title">AN ILLUSTRATIVE WORKFLOW</div><div class="flow-node">New inquiry <span>01</span></div><div class="flow-connector"></div><div class="flow-node">Route the details <span>02</span></div><div class="flow-connector"></div><div class="flow-node">Notify the team <span>03</span></div></div>',
+  '<div class="search-art"><div class="search-query">Your business, easier to find <span>↗</span></div><div class="search-result"><small>yourbusiness.com / services</small><b>Clear pages. Relevant information.</b><span>Structure, metadata, and search foundations.</span></div><div class="search-result"><small>ILLUSTRATIVE SEARCH RESULT</small><span>Search performance is never guaranteed.</span></div></div>'
+];
+const selectService = setupTabs('.service-tab', index => {
   const s = services[index];
   $('#service-panel').setAttribute('aria-labelledby', $$('.service-tab')[index].id);
   $('#service-title').textContent = s.title;
   $('#service-description').textContent = s.description;
+  $('#service-caption').textContent = s.caption;
   $('#service-tags').replaceChildren(...s.tags.map(tag => { const el = document.createElement('span'); el.textContent = tag; return el; }));
-  $('.service-art').dataset.art = index;
-  $('.art-headline').innerHTML = s.headline;
-  $('.art-sticker').innerHTML = s.sticker;
+  const art = $('.service-art');
+  art.dataset.art = index;
+  art.innerHTML = serviceArt[index]; // Fixed site-authored templates, never visitor data.
+  $('.service-project').dataset.goal = s.goal;
+  if (!reducedMotion.matches && typeof art.animate === 'function') art.animate([{ opacity: .65, transform: 'translateY(8px)' }, { opacity: 1, transform: 'translateY(0)' }], { duration: 240, easing: 'ease-out' });
 }, true);
+selectService(0);
 
 let conceptIndex = 0;
 let conceptAnimation;
@@ -89,6 +128,11 @@ const selectConcept = setupTabs('.concept-switch button', index => {
   }
 });
 $('#concept-next').addEventListener('click', () => selectConcept((conceptIndex + 1) % concepts.length));
+$$('.spotlight-button').forEach(button => button.addEventListener('click', () => {
+  selectConcept(Number(button.dataset.explore));
+  $('#work').scrollIntoView({ behavior: reducedMotion.matches ? 'auto' : 'smooth', block: 'start' });
+  $('#concept-panel').focus({ preventScroll: true });
+}));
 
 // Draggable paper-world hero: pointer rotation, keyboard control, click to switch.
 const stage = $('.hero-stage');
@@ -111,9 +155,10 @@ stage.addEventListener('pointerdown', event => {
   stage.classList.add('dragging');
 });
 stage.addEventListener('pointermove', event => {
-  if (!dragging || reducedMotion.matches) return;
+  if (!dragging) return;
   const dx = event.clientX - dragging.px, dy = event.clientY - dragging.py;
   if (Math.abs(dx) + Math.abs(dy) > 7) dragging.moved = true;
+  if (reducedMotion.matches) return;
   rotateHero(dragging.x - dy * .075, dragging.y + dx * .075);
 });
 stage.addEventListener('pointerup', () => { if (dragging && !dragging.moved) changeHero(); dragging = null; stage.classList.remove('dragging'); });
@@ -129,50 +174,22 @@ setTimeout(() => stage.classList.add('ready'), 1450);
 // A real comparison control, assisted by scroll only until the visitor takes over.
 const range = $('#compare-range'); let comparisonManual = false;
 range.addEventListener('input', () => { comparisonManual = true; $('.comparison').style.setProperty('--split', range.value + '%'); });
-const visibleSections = new Set();
-const observer = new IntersectionObserver(entries => entries.forEach(entry => {
-  if (entry.isIntersecting) { entry.target.classList.add('in-view'); visibleSections.add(entry.target.id || entry.target.className); }
-  else visibleSections.delete(entry.target.id || entry.target.className);
-}), { threshold: .12 });
-$$('main > section').forEach(section => observer.observe(section));
-let ticking = false, lastY = scrollY;
-const process = $('#process');
-function scrollFrame() {
-  ticking = false;
-  if (reducedMotion.matches) return;
-  const y = scrollY;
-  const heroOffset = clamp(y * .1, 0, 60);
-  $('.hero-collage').style.translate = `0 ${heroOffset}px`;
-  if (!comparisonManual && visibleSections.has('approach')) {
-    const rect = $('.comparison').getBoundingClientRect();
-    const progress = clamp((innerHeight - rect.top) / (innerHeight + rect.height), 0, 1);
-    const split = clamp(90 - progress * 100, 5, 95);
-    range.value = String(Math.round(split)); $('.comparison').style.setProperty('--split', split + '%');
-  }
-  if (!mobile.matches) {
-    const distance = Math.max(1, process.offsetHeight - innerHeight);
-    const progress = clamp(-process.getBoundingClientRect().top / distance, 0, 1);
-    process.style.setProperty('--progress', Math.max(12, progress * 100) + '%');
-    const step = Math.min(2, Math.floor(progress * 3));
-    $$('.process-step').forEach((el, i) => el.classList.toggle('active', i === step));
-  }
-  // The Drive RGB-split reference inspires a restrained ink separation here only.
-  if (visibleSections.has('work')) {
-    const velocity = clamp((y - lastY) * .09, -3, 3);
-    $('#concept-headline').style.textShadow = `${velocity}px 0 #ff5b2755, ${-velocity}px 0 #92b2ce44`;
-    clearTimeout(scrollFrame.reset); scrollFrame.reset = setTimeout(() => $('#concept-headline').style.textShadow = 'none', 100);
-  }
-  if (visibleSections.has('contact')) $('.contact-star').style.setProperty('--star-turn', (y * .065 % 360) + 'deg');
-  lastY = y;
+function setComparison(value) {
+  const split = clamp(value, 5, 95);
+  range.value = String(Math.round(split)); $('.comparison').style.setProperty('--split', split + '%');
 }
-addEventListener('scroll', () => { if (!ticking) { requestAnimationFrame(scrollFrame); ticking = true; } }, { passive: true });
-addEventListener('resize', scrollFrame, { passive: true });
-scrollFrame();
+// Smaller pointer feedback is separate from the image-spot animation.
 $$('.magnetic').forEach(button => {
-  button.addEventListener('pointermove', event => { if (reducedMotion.matches || event.pointerType !== 'mouse') return; const rect = button.getBoundingClientRect(); button.style.transform = `translate(${(event.clientX - rect.left - rect.width / 2) * .08}px, ${(event.clientY - rect.top - rect.height / 2) * .13}px)`; });
+  button.addEventListener('pointermove', event => { if (reducedMotion.matches || event.pointerType !== 'mouse') return; const rect = button.getBoundingClientRect(); button.style.transform = `translate(${(event.clientX - rect.left - rect.width / 2) * .06}px, ${(event.clientY - rect.top - rect.height / 2) * .1}px)`; });
   button.addEventListener('pointerleave', () => button.style.transform = '');
 });
-reducedMotion.addEventListener('change', event => { document.body.classList.toggle('motion-enabled', !event.matches); if (event.matches) { $('.hero-collage').style.translate = ''; $('#concept-headline').style.textShadow = 'none'; $('.contact-star').style.setProperty('--star-turn', '0deg'); } else scrollFrame(); });
+reducedMotion.addEventListener('change', () => {
+  if (reducedMotion.matches) {
+    $$('.magnetic').forEach(el => el.style.transform = '');
+    conceptAnimation?.cancel();
+  }
+});
+setupMotion({ motion: reducedMotion, getComparisonManual: () => comparisonManual, setComparison });
 startOrb($('#orb'), reducedMotion);
 
 // No fake submission: a local project planner produces an exportable brief.

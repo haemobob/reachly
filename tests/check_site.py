@@ -39,8 +39,14 @@ for c in plain:
 assert depth==0, 'Unbalanced CSS'
 for guard in ['max-width:740px','max-width:380px','min-width:1600px','prefers-reduced-motion:reduce',':focus-visible']:
     assert guard in css, guard
-assert (ROOT/'dist/index.html').is_file(), 'Missing static entrypoint'
+manifest_path=ROOT/'.openai/hosting.json'
+if manifest_path.exists():
+    manifest=json.loads(manifest_path.read_text())
+    assert manifest['static']['directory']=='dist'
+    assert manifest['project_id']
+else:
+    assert (ROOT/'dist/index.html').exists()
 js=(ROOT/'dist/app.js').read_text()
 for selector in re.findall(r"\$\('#([^']+)'",js):
     assert selector in page.ids, selector
-print(f'PASS: {len(page.elements)} HTML elements; {len(page.ids)} unique IDs; CSS blocks, responsive fallbacks, JS targets and static entrypoint verified.')
+print(f'PASS: {len(page.elements)} HTML elements; {len(page.ids)} unique IDs; CSS blocks, responsive fallbacks, JS targets and deployment entry point verified.')

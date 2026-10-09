@@ -15,6 +15,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - run: npm ci
       - run: npm test
       - run: python tests/check_site.py
-      - run: node --check dist/app.js && node --check dist/model.js && node --check dist/orb.js
+      - run: node --check dist/app.js && node --check dist/model.js && node --check dist/orb.js && node --check dist/motion.js

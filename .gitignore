@@ -1,7 +1,5 @@
 node_modules/
-.vercel/
-.env
-.env.*
-__pycache__/
-*.pyc
+.sites-runtime/
+.openai/runtime/
 .DS_Store
+*.log

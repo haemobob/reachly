@@ -22,14 +22,14 @@ test('every navigation anchor resolves to a unique element', () => {
 test('every tab declares a valid accessible panel', () => {
   const ids = [...html.matchAll(/\bid="([^"]+)"/g)].map(m => m[1]);
   for (const match of html.matchAll(/aria-(?:controls|labelledby)="([^"]+)"/g)) assert.ok(ids.includes(match[1]), match[1]);
-  assert.equal((html.match(/role="tab"/g) || []).length, 6);
+  assert.equal((html.match(/role="tab"/g) || []).length, services.length + concepts.length);
   assert.equal((html.match(/aria-selected="true"/g) || []).length, 2);
 });
 test('concepts contain local assets and deliberately distinct narratives', () => {
   assert.equal(new Set(concepts.map(c => c.brand)).size, 3);
   assert.equal(new Set(concepts.map(c => c.category)).size, 3);
   for (const concept of concepts) assert.ok(existsSync(resolve(root, 'dist', concept.image)));
-  assert.equal(services.length, 3);
+  assert.deepEqual(services.map(s => s.name), ['Website design & development', 'Digital presence', 'Digital strategy', 'Business automation', 'SEO']);
 });
 test('project export retains complete visitor data as plain text', () => {
   const result = buildBrief({ name: ' Alex ', business: ' Our café ', email: ' alex@example.com ', goals: ['A new website', 'Brand & online presence'], message: 'Multiline\nproject idea.' });
@@ -69,4 +69,15 @@ test('photography and fonts have no runtime third-party requests', () => {
   assert.ok(existsSync(resolve(root,'dist/THIRD_PARTY_LICENSES.txt')));
   assert.ok(existsSync(resolve(root,'dist/assets/BarlowCondensed-OFL.txt')));
   assert.ok(existsSync(resolve(root,'dist/assets/Manrope-OFL.txt')));
+});
+
+test('Vercel serves the actual static entry point instead of the repository root', () => {
+  const config = JSON.parse(readFileSync(resolve(root, 'vercel.json'), 'utf8'));
+  assert.equal(config.framework, null);
+  assert.equal(config.outputDirectory, 'dist');
+  assert.equal(config.buildCommand, '');
+  assert.equal(config.installCommand, '');
+  assert.ok(existsSync(resolve(root, config.outputDirectory, 'index.html')));
+  // Only deployable files should be served; internal profile and tests stay at root.
+  assert.ok(!existsSync(resolve(root, config.outputDirectory, 'COMPANY_PROFILE.md')));
 });

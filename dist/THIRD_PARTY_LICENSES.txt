@@ -20,3 +20,15 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
+
+
+GSAP and ScrollTrigger 3.15.0
+Copyright 2026, GreenSock. All rights reserved.
+Subject to the standard license at https://gsap.com/standard-license/.
+Unmodified distribution builds and their proprietary notices are retained in vendor/.
+
+User-supplied Drive component adaptations:
+Text Animations / 18 / gooey-text-reveal (alpha-matrix and line blur reveal)
+Hover Effects / 21 / zentry-hover-animation (expanding spots, drift and tilt)
+Source archives and modifications are documented in DESIGN_NOTES.md.
+No additional license was specified in the supplied archives.
