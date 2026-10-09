@@ -35,7 +35,7 @@ function load({ enhanced = false, reduced = false, paused = false, draft = null 
     w.eval(read('dist/vendor/gsap.min.js'));
     w.eval(read('dist/vendor/ScrollTrigger.min.js'));
   }
-  const strip = source => source.replace(/^import .*;\n/gm, '').replace(/^export /gm, '');
+  const strip = source => source.replace(/^import .*;\r?\n/gm, '').replace(/^export /gm, '');
   w.eval(strip(read('dist/model.js')) + '\n' + strip(read('dist/orb.js')) + '\n' + strip(read('dist/motion.js')) + '\n' + strip(read('dist/app.js')));
   return { w, doc: w.document, queries, close() { w.ScrollTrigger?.killAll(); w.gsap?.ticker.sleep(); w.close(); } };
 }
