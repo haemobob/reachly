@@ -12,6 +12,8 @@ export function setupMotion({ motion, getComparisonManual, setComparison }) {
   const $$ = q => [...document.querySelectorAll(q)];
   function install() {
     media?.revert();
+    $$('.handoff-work > span').forEach(el => el.style.removeProperty('clip-path'));
+    $('.handoff-line')?.style.removeProperty('transform');
     $$('.goo-shell').forEach(el => el.classList.remove('goo-filter'));
     if (motion.matches) return;
     document.body.classList.add('gsap-active');
@@ -40,8 +42,16 @@ export function setupMotion({ motion, getComparisonManual, setComparison }) {
         clipPath: 'inset(0% 0% 0% 0% round 10px)', ease: 'none',
         scrollTrigger: { trigger: '.concept-image', start: 'top 90%', end: 'top 28%', scrub: .45 }
       });
-      gsap.to('.contact-star', { rotation: 130, ease: 'none',
-        scrollTrigger: { trigger: '.contact', start: 'top bottom', end: 'bottom top', scrub: .6 }
+      // Drive Scroll Animation / 53: diagonal nine-mask order, adapted to a section boundary.
+      // CSS grid replaces its duplicated background images; native scrolling remains intact.
+      gsap.fromTo('.handoff-work > span', { clipPath: 'polygon(0% 0%, 0% 0%, 0% 0%, 0% 0%)' }, {
+        clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)',
+        stagger: index => (Math.floor(index / 3) + index % 3) * .08, ease: 'power2.out',
+        scrollTrigger: { trigger: '.handoff-work', start: 'top 95%', end: 'bottom 55%', scrub: .35 }
+      });
+      gsap.fromTo('.handoff-line', { scaleX: .04 }, {
+        scaleX: 1, transformOrigin: 'left', ease: 'none',
+        scrollTrigger: { trigger: '.handoff-plan', start: 'top 90%', end: 'bottom 65%', scrub: .25 }
       });
       if (context.conditions.desktop) {
         gsap.fromTo('.process-rail > span', { scaleY: 0 }, { scaleY: 1, ease: 'none',

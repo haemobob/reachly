@@ -55,3 +55,5 @@ The supported managed browser capability was unavailable. Simulated-DOM tests ve
 - Jakub Antalik’s `thinking-orbs` geometry is adapted under MIT, with its notice in `dist/THIRD_PARTY_LICENSES.txt`.
 - Concept photography is from Unsplash photo IDs `photo-1442512595331-e89e73853f31`, `photo-1494438639946-1ebd1d20bf85`, and `photo-1490750967868-88aa4486c946`.
 - Locally hosted Barlow Condensed and Manrope font license notices accompany the assets.
+
+The current UI uses contained concept artwork and two distinct section-boundary scroll effects. Design sources and verification limits are recorded in `DESIGN_NOTES.md`.

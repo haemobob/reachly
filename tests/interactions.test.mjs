@@ -213,3 +213,37 @@ test('comparison headline, image and footer have separate layout slots', () => {
     for (const name of ['hero-concept-label', 'drag-hint']) assert.equal(dom.window.getComputedStyle(doc.querySelector('.' + name)).position, 'static');
   } finally { dom.window.close(); }
 });
+
+test('hero clips transformed artwork while keeping instructions outside its paint boundary', () => {
+  const dom = new JSDOM(read('dist/index.html'));
+  try {
+    const doc = dom.window.document; const style = doc.createElement('style');
+    style.textContent = read('dist/style.css'); doc.head.append(style);
+    const computed = e => dom.window.getComputedStyle(e);
+    const stage = doc.querySelector('.hero-stage');
+    assert.equal(computed(stage).overflow, 'clip');
+    assert.equal(computed(stage).contain, 'paint');
+    assert.equal(stage.contains(doc.querySelector('.hero-demo-caption')), false);
+    assert.equal(computed(doc.querySelector('.hero-browser')).position, 'relative');
+    assert.equal(computed(doc.querySelector('.hero-collage')).display, 'grid');
+    assert.equal(computed(doc.querySelector('.header')).position, 'relative');
+    assert.equal(doc.querySelector('.browser-chrome, .phone, .phone-notch, .project-browser-bar'), null);
+  } finally { dom.window.close(); }
+});
+
+test('distinct section transitions register, revert on pause and resume without duplicates', () => {
+  const env = load({ enhanced: true });
+  try {
+    const { w, doc } = env;
+    const boundaries = ['.handoff-work', '.handoff-plan'];
+    const count = name => w.ScrollTrigger.getAll().filter(t => t.vars.trigger === name).length;
+    assert.equal(doc.querySelectorAll('.handoff-work > span').length, 9);
+    boundaries.forEach(name => assert.equal(count(name), 1));
+    doc.querySelector('#motion-toggle').click();
+    boundaries.forEach(name => assert.equal(count(name), 0));
+    assert.equal(doc.querySelector('.handoff-work > span').style.clipPath, '');
+    assert.equal(doc.querySelector('.handoff-line').style.transform, '');
+    doc.querySelector('#motion-toggle').click();
+    boundaries.forEach(name => assert.equal(count(name), 1));
+  } finally { env.close(); }
+});

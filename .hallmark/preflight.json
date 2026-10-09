@@ -1,0 +1,12 @@
+{
+  "framework": "vanilla HTML",
+  "fonts": [
+    "Barlow Condensed",
+    "Manrope"
+  ],
+  "palette": "cream / vermilion / ink",
+  "motion": "local GSAP / ScrollTrigger",
+  "audience": "Indonesian SMEs",
+  "use": "review work and start project brief",
+  "tone": "graphic editorial studio"
+}
