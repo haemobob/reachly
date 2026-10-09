@@ -1,12 +1,12 @@
 # Reachly
 
-An English-language website for Reachly’s Indonesian SME services: website design and development, digital presence, digital strategy, business automation, and foundational SEO. Cream, vermilion, and ink; editorial layouts; local concept photography; distinct service diagrams; and purposeful GSAP motion.
+An English-language website for Reachly’s Indonesian SME services: website design and development, digital presence, digital strategy, business automation, and foundational SEO. Approved lime, ink, cream, and deep green; Arena-inspired editorial layouts; local concept photography; distinct service diagrams; and purposeful GSAP motion.
 
 `COMPANY_PROFILE.md` is the owner-supplied source of truth. `DESIGN_NOTES.md` records the design, exact Drive components adapted, motion behavior, and verification limits.
 
 ## Development and deployment
 
-The deployable static website is in `dist/`. HTML, CSS, native ES modules, and locally vendored GSAP require **no build step**. All photos, fonts, and runtime scripts are local. Node dependencies are used only for testing.
+The deployable static website is in `dist/`. HTML, CSS, native ES modules, and locally vendored GSAP require **no build step**. All photos, fonts, and runtime scripts are local. Node dependencies are development-only: testing and SkillUI reference extraction. They are not served or installed in production.
 
 For local checks, use Node 24 and Python 3.12:
 
@@ -18,7 +18,19 @@ node --check dist/app.js
 node --check dist/model.js
 node --check dist/motion.js
 node --check dist/orb.js
+npx --no-install playwright install chromium
+npm run test:browser
 ```
+
+Preview locally: `python -m http.server 4174 --bind 127.0.0.1 --directory dist`, then open http://127.0.0.1:4174/.
+
+The `reachlyid` branch uses project-local SkillUI 1.3.4 with real Ultra extraction:
+
+```sh
+npx --no-install skillui --url https://www.adidasarena.com/ --mode ultra --name adidas-arena --out design/reference --format design-md --no-skill
+```
+
+Raw reference captures are ignored and never deployed. Read `docs/design/arena-adaptation.md` for observed evidence and extraction pitfalls. The approved kit backup is in `brand/Reachly-Brand-Kit/`; the eight served identity assets are in `dist/assets/brand/`. Ponytail coding/review guidance is pinned in `docs/agent/` and activated through `AGENTS.md`.
 
 For Vercel, import this repository with **Root Directory left at the repository root**. The committed `vercel.json` selects **Other**, skips installation and building, and serves **dist**. This prevents a root 404 when the HTML entry point is under `dist/`. After a configuration change, deploy the latest `main` commit; redeploying an older commit will not include the fix. Connect `reachly.id` through the host’s domain settings using the records it provides. Domain DNS and a public launch are separate from this owner-private preview:
 
@@ -42,9 +54,9 @@ Reusable software, AI-assisted tools, productized automation, Meta Ads, and deep
 
 ## Validation
 
-Twenty-one tests check actual simulated-DOM interactions, service selection, keyboard tabs, concept buttons, local brief handling, privacy erasure, visitor text safety, real GSAP initialization and cleanup, asset integrity, navigation, company scope, bounded mouse poses, and deterministic orb geometry. Parsed HTML/CSS and ES-module syntax checks run separately. GitHub Actions runs the same suite on pushes and pull requests.
+Thirty-three Node tests check actual simulated-DOM interactions, service selection, keyboard tabs, concept buttons, local brief handling, privacy erasure, visitor text safety, real GSAP initialization and cleanup, asset integrity, navigation, company scope, bounded mouse poses, and deterministic orb geometry. Parsed HTML/CSS and ES-module syntax checks run separately. Real Chromium adds 87 passing checks across 320, 375, 768, 1024, and 1440px, with three expected desktop skips for the mobile menu. GitHub Actions is configured to run both suites and retain screenshot evidence on pushes and pull requests.
 
-The supported managed browser capability was unavailable. Simulated-DOM tests verify state and runtime behavior; they do not verify visual rendering, actual scroll geometry, or device performance. See the manual viewport and input acceptance notes in `DESIGN_NOTES.md`.
+Local Chromium verification now covers real layout, keyboard controls, clipboard/download, privacy erasure, no-JavaScript and blocked-GSAP fallbacks, and motion lifecycle. Screenshots are saved under `.artifacts/arena/`. See `docs/design/qa.md` for exact results and visual-review limits. Physical devices, screen readers, production hosting, and measured Web Vitals are not verified by this suite.
 
 ## References and licenses
 

@@ -115,7 +115,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 .concept-image { border-radius: 0; }
 .process { background: var(--green); color: var(--paper); }
 .process .section-label, .process-step { border-color: var(--line-dark); }
-.process-intro > p, .process-step p, .process-step h3, .process-dial, .process .micro, .process-step .step-num { color: var(--paper); opacity: 1; }
+.process-intro > p, .process-step p, .process-step h3, .process-dial, .process .micro { color: var(--paper); opacity: 1; }
 .process .step-number { color: var(--paper); }
 .process-step.active .step-number { color: var(--lime); }
 .process-rail { background: var(--line-dark); }

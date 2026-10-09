@@ -395,7 +395,7 @@ test('visual evidence: no page overflow and section screenshots', async ({ page 
     const rect = await section.boundingBox();
     expect.soft(rect.x, selector + ' left edge').toBeGreaterThanOrEqual(-1);
     expect.soft(rect.x + rect.width, selector + ' right edge').toBeLessThanOrEqual(page.viewportSize().width + 1);
-    await section.screenshot({ path: '.artifacts/arena/' + testInfo.project.name + '-' + selector.slice(1) + '.png', animations: 'disabled' });
+    await section.screenshot({ path: '.artifacts/arena/' + testInfo.project.name + '-' + selector.slice(1) + '.png', animations: 'disabled', style: '.skip-link:not(:focus) { visibility: hidden; }' });
   }
   await page.locator('.hero-intro .project-open').click();
   await page.locator('#project-dialog').screenshot({ path: '.artifacts/arena/' + testInfo.project.name + '-planner.png', animations: 'disabled' });

@@ -1,6 +1,12 @@
 # Reachly — UI and motion decisions
 
-The visual direction preserves Reachly’s cream, vermilion, and ink identity while making its business scope clearer. Editorial typography, an asymmetric statement, a tactile concept collage, diagrams tailored to each service, and a readable five-stage process give different information different presentations.
+The current branch uses the approved Reachly brand kit: cream, lime, ink, and deep green. Earlier sections below describe prior revisions; the current Ultra adaptation and verification supersede their palette and browser-unavailable statements. Editorial typography, an asymmetric statement, a tactile concept collage, diagrams tailored to each service, and a readable five-stage process give different information different presentations.
+
+## Current Reachlyid adaptation
+
+SkillUI 1.3.4 was actually run in Ultra mode against Adidas Arena, producing seven scroll frames and interaction captures. Screenshots and extracted CSS informed an original editorial split hero, outlined/solid type hierarchy, thin frame rules, and offset client gallery. Reachly retains its approved SVG logos, existing local fonts, device previews, copy and interactions. The small override stylesheet is `dist/arena.css`; no framework or runtime dependency was added.
+
+See `docs/design/arena-adaptation.md` for exact provenance and corrections to generated recommendations, and `docs/design/qa.md` for Chromium results. New browser contracts verify all five widths and catch both inactive-service text specificity and the 320px miniature-browser overlap that simulated DOM checks missed. Artwork hashes are preserved through Git with scoped `-text` attributes.
 
 ## Company content
 
