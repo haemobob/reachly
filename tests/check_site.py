@@ -29,7 +29,7 @@ for tag,a in page.elements:
     if tag=='a' and a.get('href','').startswith('#') and len(a['href'])>1:
         assert a['href'][1:] in page.ids
 
-css = (ROOT/'dist/style.css').read_text()
+css = '\n'.join((ROOT / name).read_text(encoding='utf-8') for name in ['dist/style.css', 'dist/arena.css'])
 # Strip string literals before balancing blocks.
 plain=re.sub(r"'(?:[^'\\]|\\.)*'|\"(?:[^\"\\]|\\.)*\"",'',css)
 depth=0
