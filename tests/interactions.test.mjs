@@ -224,10 +224,12 @@ test('hero clips transformed artwork while keeping instructions outside its pain
     assert.equal(computed(stage).overflow, 'clip');
     assert.equal(computed(stage).contain, 'paint');
     assert.equal(stage.contains(doc.querySelector('.hero-demo-caption')), false);
-    assert.equal(computed(doc.querySelector('.hero-browser')).position, 'relative');
-    assert.equal(computed(doc.querySelector('.hero-collage')).display, 'grid');
+    assert.equal(computed(doc.querySelector('.hero-browser')).position, 'absolute');
+    assert.equal(computed(doc.querySelector('.hero-collage')).display, 'block');
     assert.equal(computed(doc.querySelector('.header')).position, 'relative');
-    assert.equal(doc.querySelector('.browser-chrome, .phone, .phone-notch, .project-browser-bar'), null);
+    assert.ok(doc.querySelector('.browser-chrome'));
+    assert.ok(doc.querySelector('.phone .phone-notch'));
+    assert.equal(doc.querySelectorAll('.project-browser-bar').length, 4);
   } finally { dom.window.close(); }
 });
 
@@ -235,15 +237,36 @@ test('distinct section transitions register, revert on pause and resume without 
   const env = load({ enhanced: true });
   try {
     const { w, doc } = env;
-    const boundaries = ['.handoff-work', '.handoff-plan'];
+    const boundaries = ['.portfolio', '.project-grid'];
     const count = name => w.ScrollTrigger.getAll().filter(t => t.vars.trigger === name).length;
-    assert.equal(doc.querySelectorAll('.handoff-work > span').length, 9);
+    assert.equal(doc.querySelector('.section-handoff'), null);
     boundaries.forEach(name => assert.equal(count(name), 1));
     doc.querySelector('#motion-toggle').click();
     boundaries.forEach(name => assert.equal(count(name), 0));
-    assert.equal(doc.querySelector('.handoff-work > span').style.clipPath, '');
-    assert.equal(doc.querySelector('.handoff-line').style.transform, '');
+    assert.equal(doc.querySelector('.portfolio').style.clipPath, '');
+    assert.equal(doc.querySelector('.project-visual').style.clipPath, '');
     doc.querySelector('#motion-toggle').click();
     boundaries.forEach(name => assert.equal(count(name), 1));
   } finally { env.close(); }
+});
+
+test('services retain readable text contrast on the cream surface', () => {
+  const css = read('dist/style.css');
+  const tokens = new Map([...css.matchAll(/(--[\w-]+):\s*(#[0-9a-fA-F]{6})/g)].map(m => [m[1], m[2]]));
+  const luminance = hex => {
+    const channels = [1, 3, 5].map(i => parseInt(hex.slice(i, i + 2), 16) / 255).map(c => c <= .04045 ? c / 12.92 : ((c + .055) / 1.055) ** 2.4);
+    return channels[0] * .2126 + channels[1] * .7152 + channels[2] * .0722;
+  };
+  const bg = luminance(tokens.get('--paper'));
+  const dom = new JSDOM(read('dist/index.html'));
+  try {
+    const doc = dom.window.document; const style = doc.createElement('style');style.textContent = css;doc.head.append(style);
+    for (const selector of ['.services', '.services-heading > p', '.service-tab', '.service-num', '.service-panel h3', '.service-panel p', '.service-caption', '.service-project', '.future-strip .micro', '.future-copy']) {
+      const el = doc.querySelector(selector); const color = dom.window.getComputedStyle(el).color;
+      const token = color.match(/var\((--[\w-]+)\)/)?.[1];
+      assert.ok(tokens.has(token), selector + ': known text token');
+      const fg = luminance(tokens.get(token));
+      assert.ok((Math.max(bg, fg) + .05) / (Math.min(bg, fg) + .05) >= 4.5, selector + ': normal text contrast');
+    }
+  } finally { dom.window.close(); }
 });

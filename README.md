@@ -57,3 +57,5 @@ The supported managed browser capability was unavailable. Simulated-DOM tests ve
 - Locally hosted Barlow Condensed and Manrope font license notices accompany the assets.
 
 The current UI uses contained concept artwork and two distinct section-boundary scroll effects. Design sources and verification limits are recorded in `DESIGN_NOTES.md`.
+
+Browser and mobile concept previews are retained by owner preference. Services text is contrast checked; scroll transitions reveal actual portfolio content.

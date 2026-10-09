@@ -196,3 +196,57 @@ body.motion-paused .handoff-work>span,body.motion-paused .handoff-line{transform
 .handoff-work{grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:repeat(3,minmax(0,1fr))}
 body.motion-paused .handoff-work>span{clip-path:none!important}
 @media(prefers-reduced-motion:reduce){.handoff-work>span{clip-path:none!important}}
+
+/* Owner direction: restore tactile desktop/mobile presentations; motion reveals work. */
+:root{--text-secondary:#50534a;--accent-readable:#b63810;--chrome-paper:#fff;--hero-shadow:#2d292322}
+.hero h1{font-size:clamp(64px,10.6vw,168px);line-height:.98}
+.hero-second{display:flex;gap:.2em;flex-wrap:wrap}
+.hero-stage{height:clamp(400px,34vw,540px);overflow:clip;contain:paint}
+.hero-collage{display:block;inset:28px 30px 74px;transform:rotateY(var(--rotate-y,-10deg)) rotateX(var(--rotate-x,5deg)) rotateZ(-4deg)}
+.hero-browser{position:absolute;width:88%;height:calc(100% - 38px);top:22px;left:0;border:1px solid var(--ink);border-radius:8px;overflow:hidden;box-shadow:0 18px 34px var(--hero-shadow);background:var(--chrome-paper)}
+.browser-chrome{height:28px;background:var(--chrome-paper);color:var(--text-secondary);font-size:8px}
+.browser-url{font-size:8px;line-height:1.4}
+.coffee-site{height:calc(100% - 28px);padding:16px 20px;gap:15px}
+.coffee-layout h3{font-size:clamp(31px,3.6vw,54px);line-height:1.05;letter-spacing:-.055em}
+.coffee-layout img{height:100%;border-radius:90px 90px 3px 3px;max-height:265px}
+.coffee-layout em{font-style:italic}
+.mock-pill{display:inline-block;border:1px solid var(--ink-coffee);border-radius:20px;padding:7px 10px;margin-top:10px}
+.phone{position:absolute;top:auto;bottom:0;right:0;width:26%;height:80%;min-height:0;display:grid;grid-template-rows:14px auto minmax(0,1fr) auto;border:5px solid var(--ink);border-radius:23px;overflow:hidden;background:var(--surface-flora);transform:rotate(10deg) translateZ(35px);box-shadow:8px 12px 24px var(--hero-shadow)}
+.phone-notch{position:relative;top:0;left:50%;transform:translateX(-50%);width:48%;height:10px;background:var(--ink);border-radius:0 0 9px 9px}
+.phone-nav{padding:8px 10px;display:flex;justify-content:space-between;font:20px/1.1 var(--serif);color:var(--ink-flora)}
+.phone-nav span{font-size:12px}
+.phone img{width:100%;height:100%;min-height:0;object-fit:cover}
+.phone-copy{font-family:var(--serif);padding:12px 10px;font-size:clamp(14px,1.6vw,23px);line-height:1.14;color:var(--ink-flora)}
+.phone-copy span{font-family:var(--body);font-size:6px;line-height:1.6;display:block;margin-top:8px}
+.hero-demo-caption{margin-top:0;padding-top:15px;gap:8px 18px}
+.hero-intro .button{white-space:normal;line-height:1.45;text-align:left}
+.services{color:var(--ink);background:var(--paper);overflow:visible}
+.services-heading>p,.service-panel p,.service-caption,.future-strip .micro,.future-strip .future-copy{color:var(--text-secondary);opacity:1}
+.service-panel h3,.future-strip p,.service-tab,.service-project,.service-tags{color:var(--ink);opacity:1}
+.service-tab{border-color:var(--line)}
+.service-tab.active{color:var(--ink)}
+.service-tab.active .service-num{color:var(--accent-readable)}
+.service-tab.active .service-arrow{color:var(--orange)}
+.service-tab.active>span:nth-child(2){text-decoration:underline;text-decoration-color:var(--orange);text-underline-offset:7px;text-decoration-thickness:2px}
+.service-project{border-color:var(--line)}
+.service-project:hover{color:var(--accent-readable);border-color:var(--accent-readable)}
+.service-panel p{font-size:16px;line-height:1.8}
+.service-caption{font-size:11px}
+.service-tags span+span{border-color:var(--line)}
+.future-strip .micro{font-size:10px}
+.future-strip .future-copy{font-size:13px;line-height:1.9}
+.future-strip canvas{background:var(--ink);border-radius:50%;padding:4px}
+.project-visual{border-radius:8px;border:1px solid var(--line-dark)}
+.project-browser-bar{height:32px;color:var(--text-secondary);background:var(--chrome-paper);border-bottom:1px solid var(--line);padding:0 13px;display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:10px;line-height:1}
+.project-browser-dots{color:var(--muted);font-size:6px;letter-spacing:2px}
+.radius-preview,.galaxy-preview,.sellaku-preview,.mac-preview{height:calc(100% - 32px)}
+.portfolio{padding-top:80px;margin-top:20px}
+.process{padding-top:70px;border-top:1px solid var(--line)}
+body.motion-paused .portfolio,body.motion-paused .project-visual{clip-path:none!important}
+@media(max-width:1050px){.hero-stage{height:400px}.hero-collage{inset:28px 25px 68px}.hero-browser{width:88%}.coffee-site{padding:14px}.coffee-layout h3{font-size:40px}.phone{width:27%;height:81%;border-width:4px}.phone-nav{font-size:17px}.phone-copy{font-size:17px}}
+@media(max-width:740px){.hero h1{font-size:12.4vw;line-height:1.02}.hero-stage{height:370px}.hero-collage{inset:30px 24px 68px}.hero-browser{width:89%;top:15px;height:calc(100% - 28px)}.coffee-site{padding:13px;gap:12px}.coffee-layout h3{font-size:36px}.phone{width:28%;height:81%;bottom:0;right:0;border-radius:19px}.phone-copy{font-size:15px;padding:10px 8px}.phone-nav{font-size:16px;padding:7px 8px}.phone-copy span{font-size:5px}.browser-chrome{height:25px;padding:0 9px}.coffee-site{height:calc(100% - 25px)}.browser-url{font-size:6px}.project-browser-bar{font-size:9px}.portfolio{padding-top:55px}.service-panel p{font-size:15px}.future-strip .future-copy{font-size:13px}.hero-concept-label,.drag-hint{font-size:10px}}
+@media(max-width:380px){.hero-stage{height:335px}.hero-collage{inset:28px 18px 65px}.coffee-layout h3{font-size:29px}.coffee-site{padding:10px;gap:10px}.phone-copy{font-size:13px;padding:8px 6px}.phone-nav{font-size:14px;padding:5px 6px}.phone{width:29%;border-radius:16px}.mock-pill{font-size:6px;padding:6px}.hero-concept-label,.drag-hint{font-size:9px}}
+@media(prefers-reduced-motion:reduce){.portfolio,.project-visual{clip-path:none!important}}
+.services .section-label,.services .service-num{color:var(--text-secondary);border-color:var(--line)}
+.service-tab:hover{color:var(--accent-readable)}
+.services .service-tab.active .service-num{color:var(--accent-readable)}
