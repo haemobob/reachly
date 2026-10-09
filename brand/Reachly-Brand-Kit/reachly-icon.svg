@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">Reachly r and dot icon</title>
+  <desc id="desc">A compact lime rounded square with an original chunky lowercase r and a detached dark dot.</desc>
+  <g id="icon">
+    <rect x="44" y="44" width="424" height="424" rx="94" fill="#D4E751" />
+    <path fill="#05100E" d="M140 214C140 191 158 173 180 173H216V204C239 183 257 173 286 173H303V251H279C239 251 220 269 220 311V376H161C149 376 140 367 140 355Z" />
+    <circle cx="344" cy="147" r="27" fill="#05100E" />
+  </g>
+</svg>
