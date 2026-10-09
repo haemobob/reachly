@@ -128,3 +128,14 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
   .portfolio-heading h2, .services-heading h2, .work-heading h2, .process-intro h2 { font-size: clamp(48px,10vw,72px); }
   .process-intro { position: static; }
 }
+dialog { background: var(--paper); color: var(--ink); border: 1px solid var(--ink); border-radius: 0; padding-top: 64px; }
+dialog::backdrop { background: rgb(5 16 14 / 72%); backdrop-filter: none; }
+.dialog-close { width: 44px; height: 44px; top: 12px; right: 12px; display: grid; place-items: center; }
+.project-dialog input, .project-dialog textarea { background: var(--paper); color: var(--ink); border-color: var(--line); }
+.project-dialog input[type=checkbox] { accent-color: var(--green); }
+.project-dialog .button, .privacy-dialog button { min-height: 44px; }
+.mobile-menu:not(.open) { visibility: hidden; pointer-events: none; }
+.mobile-menu.open { visibility: visible; pointer-events: auto; }
+@media(prefers-reduced-motion:reduce) {
+  html { scroll-behavior: auto; }
+}

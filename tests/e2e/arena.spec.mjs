@@ -349,6 +349,9 @@ test('design: planner uses brand surfaces and usable close targets', async ({ pa
   await page.locator('.hero-intro .project-open').click();
   await expect(page.locator('#project-dialog')).toBeVisible();
   await expect(page.locator('#project-dialog')).toHaveCSS('background-color', 'rgb(250, 247, 240)');
+  await expect(page.locator('#project-dialog')).toHaveCSS('border-radius', '0px');
+  await expect(page.locator('#project-dialog')).toHaveCSS('padding-top', '64px');
+  if (page.viewportSize().width <= 740) await expect(page.locator('#mobile-menu')).toHaveCSS('visibility', 'hidden');
   const close = page.locator('#project-dialog .dialog-close');
   const rect = await close.boundingBox();
   expect(rect.width).toBeGreaterThanOrEqual(44);
