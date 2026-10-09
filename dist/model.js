@@ -1,0 +1,15 @@
+export const services = [
+  { title: 'Your best first impression.', description: 'A custom website with a clear story, considered visuals, and an easy path from browsing to getting in touch.', tags: ['Design & development', 'Mobile ready', 'Search foundations'], headline: 'HELLO,<br><em>WORLD.</em>', sticker: '100%<br>YOU.' },
+  { title: 'One business. One clear voice.', description: 'A considered visual identity and consistent messaging across your website and social profiles. Every touchpoint should feel like the same business.', tags: ['Visual direction', 'Content guidance', 'Profile consistency'], headline: 'MAKE<br><em>YOUR MARK.</em>', sticker: 'YOUR<br>STORY.' },
+  { title: 'A little care goes a long way.', description: 'Content updates, website care, and practical guidance as your business evolves. We agree on the support you need, so the next step stays clear.', tags: ['Website care', 'Content updates', 'Practical guidance'], headline: 'GROW,<br><em>TOGETHER.</em>', sticker: 'NEXT<br>CHAPTER.' }
+];
+export const concepts = [
+  { image: 'assets/coffee.jpg', alt: 'Coffee being prepared at a café', brand: 'KOPI / KITA', headline: 'A little cup<br>of <em>good.</em>', link: 'YOUR EVERYDAY RITUAL ↗', category: 'FOOD & BEVERAGE', name: 'Local roots. A fresh look.', description: 'Warm colours, generous photography, and a little character. An online home that feels like walking into your favourite café.', hero: 'A little<br>cup of<br><em>good.</em>', background: '#f0eedc', ink: '#26382b', eyebrow: 'YOUR EVERYDAY RITUAL.' },
+  { image: 'assets/flowers.jpg', alt: 'Delicate white flowers in a spring arrangement', brand: 'flora ✳', headline: 'Made for<br><em>your moment.</em>', link: 'FLOWERS WITH FEELING ↗', category: 'FLOWERS & GIFTING', name: 'A softer kind of standout.', description: 'An expressive, personal storefront with beautiful arrangements front and centre. A considered way to help someone find just the right gesture.', hero: 'Made for<br>your<br><em>moment.</em>', background: '#f7e4de', ink: '#763626', eyebrow: 'FLOWERS WITH FEELING.' },
+  { image: 'assets/interior.jpg', alt: 'A warm living space with thoughtfully selected furniture', brand: 'COMMON GROUND.', headline: 'Room for<br><em>better living.</em>', link: 'THOUGHTFUL SPACES ↗', category: 'INTERIORS & PROFESSIONAL SERVICES', name: 'Space to show your expertise.', description: 'A quiet, confident portfolio that lets the details speak. Clear services and a thoughtful inquiry path make the next conversation feel easy.', hero: 'Room for<br>better<br><em>living.</em>', background: '#e8e3d8', ink: '#27342e', eyebrow: 'THOUGHTFUL SPACES.' }
+];
+export function clamp(value, min, max) { return Math.min(max, Math.max(min, value)); }
+export function buildBrief(data) {
+  const goals = data.goals?.length ? data.goals.join(', ') : 'To be discussed';
+  return `REACHLY — PROJECT BRIEF\n\nName: ${data.name.trim()}\nBusiness: ${data.business.trim()}\nEmail: ${data.email.trim()}\n\nInterested in: ${goals}\n\nAbout the project:\n${data.message.trim()}\n\nPrepared with Reachly’s project planner.\nThis brief has not been submitted.\n`;
+}
