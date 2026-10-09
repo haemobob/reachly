@@ -3,3 +3,8 @@ node_modules/
 .openai/runtime/
 .DS_Store
 *.log
+design/reference/
+.artifacts/
+playwright-report/
+test-results/
+
