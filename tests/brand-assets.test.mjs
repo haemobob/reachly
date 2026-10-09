@@ -23,3 +23,23 @@ test('all approved source kit files and exact runtime copies are present', () =>
   for (const icon of manifest.icons) assert.ok(existsSync(resolve(runtime, icon.src)), icon.src);
   assert.equal(manifest.theme_color, '#05100E');
 });
+test('header and footer use intact light and dark Reachly SVG lockups', () => {
+  const dom = new JSDOM(readFileSync(resolve(root, 'dist/index.html'), 'utf8'));
+  try {
+    const doc = dom.window.document;
+    for (const [selector, file] of [
+      ['.header .logo img', 'reachly-logo-black.svg'],
+      ['.footer .logo img', 'reachly-logo-white.svg']
+    ]) {
+      const img = doc.querySelector(selector);
+      assert.ok(img, selector + ' missing');
+      assert.equal(img.getAttribute('src'), 'assets/brand/' + file);
+      assert.equal(img.getAttribute('alt'), 'Reachly');
+      const svg = readFileSync(resolve(source, file), 'utf8');
+      const viewBox = svg.match(/viewBox="([^"]+)"/)[1].split(/\s+/).map(Number);
+      assert.equal(Number(img.getAttribute('width')), viewBox[2]);
+      assert.equal(Number(img.getAttribute('height')), viewBox[3]);
+    }
+    assert.equal(doc.querySelectorAll('.logo-star').length, 0);
+  } finally { dom.window.close(); }
+});
