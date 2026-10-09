@@ -46,3 +46,9 @@ The homepage lives at `dist/index.html`. `vercel.json` explicitly sets `outputDi
 Added Crypto Radius, Crypto Galaxy, Sellaku, and Mac One Indonesia after the owner identified them as client projects. The primary navigation now points to client work. All four external links retain the supplied URLs and open in a new tab with noopener/noreferrer. Project previews are editorial brand compositions using imagery from the linked websites, explicitly labelled as previews rather than screenshots. No delivery dates, performance results, or testimonials were supplied or invented.
 
 Local optimized WebP assets come from Crypto Radius `/logo.png`, Crypto Galaxy `/logo-bg.jpg`, Mac One `/assets/img/hero.jpg` and `/assets/img/brand/logo-white.png`. Sellaku's storefront source references Unsplash `photo-1555041469-a586c61ea9bc`, used here as its furniture preview. These assets serve locally and do not add runtime image requests to third-party sites.
+
+## Editorial refinement and overlap correction
+
+The hero instructions now occupy a wrapping caption beneath the interactive stage, outside the transformed artwork. The comparison uses three normal-flow rows (navigation, headline/photo, footer); its headline has dedicated space and readable line spacing rather than absolute positioning over the image. Small screens keep the same separation. The hero caption tracks the selected concept.
+
+Removed the orbit outline, floating slogan stickers, oversized hero asterisk, and repeating slogan marquee. Replaced the marquee with a quiet service/context strip and simplified services/contact copy. Retained purposeful drag, concept switching, image hover, and scroll interaction. Typography and preview edges now use a more restrained editorial treatment. Browser rendering remains unverified because the supported managed browser is unavailable.

@@ -176,3 +176,40 @@ test('company source retains approved scope and does not invent operating facts'
   assert.ok(html.includes('not delivered client projects'));
   assert.ok(!html.includes('EST. 2026'));
 });
+
+test('hero caption stays outside the draggable artwork and tracks keyboard concept changes', () => {
+  const env = load(); const { w, doc } = env;
+  try {
+    const stage = doc.querySelector('.hero-stage');
+    const caption = doc.querySelector('.hero-demo-caption');
+    assert.equal(stage.contains(caption), false);
+    assert.equal(stage.parentElement, caption.parentElement);
+    assert.equal(caption.previousElementSibling, stage);
+    stage.dispatchEvent(new w.KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
+    assert.equal(doc.querySelector('#hero-demo-number').textContent, '02');
+    stage.dispatchEvent(new w.KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
+    assert.equal(doc.querySelector('#hero-demo-number').textContent, '03');
+    stage.dispatchEvent(new w.KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
+    assert.equal(doc.querySelector('#hero-demo-number').textContent, '01');
+  } finally { env.close(); }
+});
+
+test('comparison headline, image and footer have separate layout slots', () => {
+  const dom = new JSDOM(read('dist/index.html'));
+  try {
+    const doc = dom.window.document;
+    const style = doc.createElement('style'); style.textContent = read('dist/style.css'); doc.head.append(style);
+    const site = doc.querySelector('.after-site');
+    const content = doc.querySelector('.after-content');
+    const title = doc.querySelector('.after-title');
+    assert.equal(site.children[1], content);
+    assert.equal(content.children[0], title);
+    assert.equal(content.children[1].tagName, 'IMG');
+    assert.equal(site.children[2].className, 'after-footer');
+    assert.equal(dom.window.getComputedStyle(site).display, 'grid');
+    assert.equal(dom.window.getComputedStyle(content).display, 'grid');
+    assert.equal(dom.window.getComputedStyle(title).position, 'static');
+    assert.ok(Number(dom.window.getComputedStyle(title).lineHeight) >= 1.1);
+    for (const name of ['hero-concept-label', 'drag-hint']) assert.equal(dom.window.getComputedStyle(doc.querySelector('.' + name)).position, 'static');
+  } finally { dom.window.close(); }
+});

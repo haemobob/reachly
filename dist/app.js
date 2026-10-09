@@ -141,6 +141,7 @@ function rotateHero(x, y) { rotation = { x: clamp(x, -15, 15), y: clamp(y, -30, 
 function changeHero() {
   heroIndex = (heroIndex + 1) % concepts.length;
   const c = concepts[heroIndex];
+  $('#hero-demo-number').textContent = String(heroIndex + 1).padStart(2, '0');
   const site = $('.coffee-site');
   site.style.background = c.background; site.style.color = c.ink;
   $('.mock-nav b', site).textContent = c.brand;
