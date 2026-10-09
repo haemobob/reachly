@@ -40,3 +40,9 @@ The simulated DOM is not a rendering engine. Browser visual QA, real scroll geom
 ## Vercel output fix
 
 The homepage lives at `dist/index.html`. `vercel.json` explicitly sets `outputDirectory` to `dist`, `framework` to null (Other), and blank install/build commands for this prebuilt static site. Keep the Vercel Root Directory at the repository root so the configuration is read. A regression test checks that this output contains the homepage and excludes internal company documents.
+
+## Owner-confirmed client work
+
+Added Crypto Radius, Crypto Galaxy, Sellaku, and Mac One Indonesia after the owner identified them as client projects. The primary navigation now points to client work. All four external links retain the supplied URLs and open in a new tab with noopener/noreferrer. Project previews are editorial brand compositions using imagery from the linked websites, explicitly labelled as previews rather than screenshots. No delivery dates, performance results, or testimonials were supplied or invented.
+
+Local optimized WebP assets come from Crypto Radius `/logo.png`, Crypto Galaxy `/logo-bg.jpg`, Mac One `/assets/img/hero.jpg` and `/assets/img/brand/logo-white.png`. Sellaku's storefront source references Unsplash `photo-1555041469-a586c61ea9bc`, used here as its furniture preview. These assets serve locally and do not add runtime image requests to third-party sites.

@@ -10,7 +10,7 @@ const js = readFileSync(resolve(root, 'dist/app.js'), 'utf8');
 const css = readFileSync(resolve(root, 'dist/style.css'), 'utf8');
 
 test('all local page resources exist and have content', () => {
-  const refs = [...html.matchAll(/(?:src|href)="([^"#]+)"/g)].map(m => m[1]);
+  const refs = [...html.matchAll(/(?:src|href)="([^"#]+)"/g)].map(m => m[1]).filter(path => !/^https?:/.test(path));
   const fonts = [...readFileSync(resolve(root, 'dist/fonts.css'), 'utf8').matchAll(/url\(([^)]+)\)/g)].map(m => m[1]);
   for (const path of [...refs, ...fonts]) { assert.ok(existsSync(resolve(root, 'dist', path)), path); assert.ok(statSync(resolve(root, 'dist', path)).size > 100, path); }
 });
@@ -21,7 +21,7 @@ test('every navigation anchor resolves to a unique element', () => {
 });
 test('every tab declares a valid accessible panel', () => {
   const ids = [...html.matchAll(/\bid="([^"]+)"/g)].map(m => m[1]);
-  for (const match of html.matchAll(/aria-(?:controls|labelledby)="([^"]+)"/g)) assert.ok(ids.includes(match[1]), match[1]);
+  for (const match of html.matchAll(/aria-(?:controls|labelledby)="([^"]+)"/g)) for (const id of match[1].split(/\s+/)) assert.ok(ids.includes(id), id);
   assert.equal((html.match(/role="tab"/g) || []).length, services.length + concepts.length);
   assert.equal((html.match(/aria-selected="true"/g) || []).length, 2);
 });
@@ -64,7 +64,7 @@ test('accessibility and motion fallbacks are present', () => {
   assert.ok(js.includes('comparisonManual = true'));
 });
 test('photography and fonts have no runtime third-party requests', () => {
-  assert.ok(!html.includes('https://'));
+  assert.ok(!/<(?:img|script|link)\b[^>]+(?:src|href)="https?:/i.test(html));
   assert.ok(!readFileSync(resolve(root, 'dist/fonts.css'),'utf8').includes('https://'));
   assert.ok(existsSync(resolve(root,'dist/THIRD_PARTY_LICENSES.txt')));
   assert.ok(existsSync(resolve(root,'dist/assets/BarlowCondensed-OFL.txt')));
@@ -80,4 +80,19 @@ test('Vercel serves the actual static entry point instead of the repository root
   assert.ok(existsSync(resolve(root, config.outputDirectory, 'index.html')));
   // Only deployable files should be served; internal profile and tests stay at root.
   assert.ok(!existsSync(resolve(root, config.outputDirectory, 'COMPANY_PROFILE.md')));
+});
+
+test('all four owner-confirmed projects have safe live links, local visuals and profile records', () => {
+  const urls = ['https://www.cryptoradius.id/', 'https://www.cgcryptogalaxy.id/', 'https://sellaku.vercel.app/toko', 'https://www.mac1ndonesia.com/'];
+  const profile = readFileSync(resolve(root, 'COMPANY_PROFILE.md'), 'utf8');
+  const projects = html.slice(html.indexOf('id="projects"'), html.indexOf('<section class="work'));
+  assert.equal((projects.match(/class="project-card /g) || []).length, 4);
+  for (const url of urls) {
+    const escaped = url.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    assert.match(projects, new RegExp('href="' + escaped + '" target="_blank" rel="noopener noreferrer"'));
+    assert.ok(profile.includes(url));
+  }
+  assert.ok(html.includes('href="#projects">Client work'));
+  assert.ok(projects.includes('Project previews use brand imagery'));
+  for (const asset of ['radius-logo', 'galaxy', 'sellaku', 'mac-one', 'mac-one-logo']) assert.ok(existsSync(resolve(root, 'dist/assets/projects/' + asset + '.webp')));
 });

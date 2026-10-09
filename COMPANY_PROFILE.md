@@ -1,18 +1,18 @@
 # Reachly — Company Profile
 
-**Version:** 1.0  
+**Version:** 1.1  
 **Profile updated:** 9 October 2026  
 **Document purpose:** Source of truth for Reachly's business positioning, website content, and agent-assisted work.  
 **Status:** Business direction finalized; operational and legal facts remain subject to verification.
 
-> “Current offerings” below means the approved initial service scope. It does not establish that Reachly is already trading, has delivered client projects, or has launched software. Unverified company facts are marked **TBD**. Planned capabilities must always be described as future possibilities.
+> “Current offerings” below means the approved initial service scope. The owner has confirmed the four client website projects recorded in Section 4a. This does not establish legal trading status, launched proprietary software, verified payment history, or measured client outcomes. Unverified company facts are marked **TBD**. Planned capabilities must always be described as future possibilities.
 
 ## 1. Finalized Business Decisions
 
 | Decision | Approved direction |
 | --- | --- |
 | Brand name | Reachly |
-| Brand domain | reachly.id; live website status: TBD |
+| Brand domain | reachly.id; live website verified 9 October 2026 |
 | Business model | Hybrid: client services initially, with a planned software/product business alongside them |
 | Primary target market | Indonesia |
 | Initial services | Website design and development, digital presence, digital strategy, business automation, and SEO |
@@ -69,6 +69,19 @@ These five service areas may be presented as Reachly's initial offering. Exact d
 - SEO scope and reporting are agreed per project. Rankings, traffic, leads, and revenue are not guaranteed.
 - Hosting, domains, maintenance, content production, third-party subscriptions, and ongoing support require explicit scope confirmation. Their inclusion is **TBD**.
 - E-commerce, complex custom applications, and other specialist development are subject to capability and project assessment; they are not established standard packages in this profile.
+
+## 4a. Owner-Confirmed Client Website Projects
+
+The owner identified the following as Reachly client projects and authorized their inclusion in the public website portfolio on 9 October 2026. All four supplied URLs were reachable when checked. Descriptions below summarize the linked website’s subject; they do not establish a full statement of work or a performance outcome.
+
+| Client/project | Website | Website subject |
+| --- | --- | --- |
+| Crypto Radius | https://www.cryptoradius.id/ | Crypto community, signals, and market context |
+| Crypto Galaxy | https://www.cgcryptogalaxy.id/ | Crypto trading community, programs, research, and membership information |
+| Sellaku | https://sellaku.vercel.app/toko | Furniture storefront and product discovery |
+| Mac One Indonesia | https://www.mac1ndonesia.com/ | HVACR, engineering, industrial automation, and maintenance services |
+
+**Verification boundary:** Client-project attribution is owner-confirmed. Project dates, precise deliverables, each team member’s role, payment history, testimonials, and traffic/conversion/revenue results remain **TBD**. Public previews use brand imagery from the linked sites and are labelled as project previews, not literal screenshots. Do not invent results or quotations. These four projects may be shown as client work; the café, florist, and interior demo concepts remain illustrative.
 
 ## 5. Planned Features and Future Offerings
 
@@ -149,9 +162,9 @@ This is the intended delivery process. Standard timelines, revision allowances, 
 | Registered address and operating location | TBD |
 | Team size and named team members | TBD |
 | Official email, telephone, WhatsApp, and social accounts | TBD |
-| Live website and domain configuration status | TBD |
+| Live website and domain configuration status | https://reachly.id verified reachable on 9 October 2026; account ownership and DNS configuration details: TBD |
 | Pricing, packages, payment terms, and currency | TBD |
-| Portfolio, paying clients, testimonials, and case studies | TBD |
+| Portfolio, paying clients, testimonials, and case studies | Four client website projects confirmed by the owner in Section 4a. Payment status, project dates, testimonials, detailed delivery scope, and measured results: TBD |
 | Revenue, funding, users, and performance metrics | TBD |
 | Technology stack and proprietary intellectual property | TBD |
 | Partnerships, certifications, awards, and accelerator/program participation | TBD |

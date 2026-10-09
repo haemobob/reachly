@@ -36,13 +36,13 @@ https://reachly-studio.craftymaple16.chatgpt.site
 
 ## Company claims and contact
 
-No verified official contact address, WhatsApp number, submission endpoint, pricing, company founding date, or customer results have been provided. Unknown facts are omitted from public copy. The attached profile’s internal TBD fields remain in the source document.
+No verified official contact address, WhatsApp number, submission endpoint, pricing, company founding date, or measured customer results have been provided. The owner has confirmed Crypto Radius, Crypto Galaxy, Sellaku, and Mac One Indonesia as client website projects; they are shown with live links and project imagery. Unknown facts are omitted from public copy. The attached profile’s internal TBD fields remain in the source document.
 
-Reusable software, AI-assisted tools, productized automation, Meta Ads, and deeper analytics are explicitly future directions or options. The concept showcase is illustrative, not completed client work. Hosting, maintenance, subscriptions, and support require agreed scope. No analytics or advertising trackers are included.
+Reusable software, AI-assisted tools, productized automation, Meta Ads, and deeper analytics are explicitly future directions or options. The separate café, florist, and interior concept showcase remains illustrative. Hosting, maintenance, subscriptions, and support require agreed scope. No analytics or advertising trackers are included.
 
 ## Validation
 
-Twenty tests check actual simulated-DOM interactions, service selection, keyboard tabs, concept buttons, local brief handling, privacy erasure, visitor text safety, real GSAP initialization and cleanup, asset integrity, navigation, company scope, bounded mouse poses, and deterministic orb geometry. Parsed HTML/CSS and ES-module syntax checks run separately. GitHub Actions runs the same suite on pushes and pull requests.
+Twenty-one tests check actual simulated-DOM interactions, service selection, keyboard tabs, concept buttons, local brief handling, privacy erasure, visitor text safety, real GSAP initialization and cleanup, asset integrity, navigation, company scope, bounded mouse poses, and deterministic orb geometry. Parsed HTML/CSS and ES-module syntax checks run separately. GitHub Actions runs the same suite on pushes and pull requests.
 
 The supported managed browser capability was unavailable. Simulated-DOM tests verify state and runtime behavior; they do not verify visual rendering, actual scroll geometry, or device performance. See the manual viewport and input acceptance notes in `DESIGN_NOTES.md`.
 
