@@ -361,6 +361,27 @@ test('design: planner uses brand surfaces and usable close targets', async ({ pa
   await expect(page.locator('.hero-intro .project-open')).toBeFocused();
 });
 
+test('design: unselected services and process numbers remain readable', async ({ page }) => {
+  await page.goto('/');
+  for (const tab of await page.locator('.service-tab:not(.active)').all()) {
+    await expect(tab).toHaveCSS('color', 'rgb(5, 16, 14)');
+  }
+  for (const number of await page.locator('.process-step:not(.active) .step-number').all()) {
+    await expect(number).toHaveCSS('color', 'rgb(250, 247, 240)');
+  }
+});
+
+test('design: miniature browser footer does not overlap its action', async ({ page }) => {
+  await page.goto('/');
+  await page.evaluate(() => document.fonts.ready);
+  const gap = await page.locator('.coffee-site').evaluate(site => {
+    const pill = site.querySelector('.mock-pill').getBoundingClientRect();
+    const footer = site.querySelector('.mock-footer').getBoundingClientRect();
+    return footer.top - pill.bottom;
+  });
+  expect(gap).toBeGreaterThanOrEqual(3);
+});
+
 test('visual evidence: no page overflow and section screenshots', async ({ page }, testInfo) => {
   await page.goto('/');
   await page.evaluate(() => document.fonts.ready);

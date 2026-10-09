@@ -83,6 +83,8 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 }
 @media(max-width:380px) {
   .hero-stage { height: 310px; }
+  .coffee-layout h3 { font-size: 24px; margin: 6px 0; }
+  .mock-pill { margin-top: 4px; }
   .hero-concept-label, .drag-hint { font-size: 9px; }
 }
 @media(forced-colors:active) {
@@ -94,7 +96,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 .approach-copy h2, .services-heading h2, .portfolio-heading h2, .work-heading h2, .process-intro h2, .contact h2 { font-family: var(--display); font-weight: 800; letter-spacing: -.025em; }
 .approach-copy h2 .serif, .services-heading h2 .serif, .portfolio-heading h2 .serif, .work-heading h2 .serif, .process-intro h2 .serif, .contact h2 .serif { font-family: var(--display); font-style: normal; font-weight: 800; font-size: 1em; letter-spacing: inherit; line-height: inherit; }
 .services-heading > p, .service-panel p, .service-caption, .service-num, .future-strip .micro, .future-copy { color: var(--text-secondary); }
-.service-tab, .service-tab.active, .service-panel h3, .service-tags, .service-project { color: var(--ink); }
+.service-tab, .service-tab.active, .service-tab:not(.active), .service-panel h3, .service-tags, .service-project { color: var(--ink); }
 .service-tab.active .service-num { color: var(--green); }
 .service-tab.active .service-arrow { color: var(--green); }
 .service-tab.active > span:nth-child(2) { text-decoration-color: var(--green); }
@@ -114,6 +116,8 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 .process { background: var(--green); color: var(--paper); }
 .process .section-label, .process-step { border-color: var(--line-dark); }
 .process-intro > p, .process-step p, .process-step h3, .process-dial, .process .micro, .process-step .step-num { color: var(--paper); opacity: 1; }
+.process .step-number { color: var(--paper); }
+.process-step.active .step-number { color: var(--lime); }
 .process-rail { background: var(--line-dark); }
 .process-rail > span { background: var(--lime); }
 .faq details { border-color: var(--line); }
