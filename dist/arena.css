@@ -56,6 +56,12 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 .hero-collage { display: block; inset: 28px 20px 38px; }
 .hero-browser { border-radius: 6px; }
 .phone { border-radius: 23px; }
+@media(min-width:1000px) {
+  /* Bound the composition; independent percentage width/height stretched the phone on wide screens. */
+  .hero { padding-inline: max(var(--gutter), calc((100% - 1600px) / 2)); container-type: inline-size; }
+  .hero h1 { font-size: clamp(64px, 7.6cqw, 128px); }
+  .hero-collage .phone { width: auto; height: 80%; aspect-ratio: 9 / 20; right: 32px; bottom: 8px; }
+}
 .hero-demo-caption { position: static; margin: 20px 0 0; padding: 0; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px 20px; }
 .hero-concept-label, .drag-hint { position: static; color: var(--green); font-size: 10px; line-height: 1.6; }
 .scroll-cue { display: none; }
