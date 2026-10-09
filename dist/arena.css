@@ -88,3 +88,43 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 @media(forced-colors:active) {
   .hero-line:first-child { color: CanvasText; -webkit-text-stroke: 0; }
 }
+.manifesto, .approach, .services, .work, .faq { background: var(--paper); color: var(--ink); }
+.manifesto-title { font-family: var(--display); font-weight: 800; font-style: normal; line-height: 1; }
+.manifesto-bottom { border-top-color: var(--ink); }
+.approach-copy h2, .services-heading h2, .portfolio-heading h2, .work-heading h2, .process-intro h2, .contact h2 { font-family: var(--display); font-weight: 800; letter-spacing: -.025em; }
+.approach-copy h2 .serif, .services-heading h2 .serif, .portfolio-heading h2 .serif, .work-heading h2 .serif, .process-intro h2 .serif, .contact h2 .serif { font-family: var(--display); font-style: normal; font-weight: 800; font-size: 1em; letter-spacing: inherit; line-height: inherit; }
+.services-heading > p, .service-panel p, .service-caption, .service-num, .future-strip .micro, .future-copy { color: var(--text-secondary); }
+.service-tab, .service-tab.active, .service-panel h3, .service-tags, .service-project { color: var(--ink); }
+.service-tab.active .service-num { color: var(--green); }
+.service-tab.active .service-arrow { color: var(--green); }
+.service-tab.active > span:nth-child(2) { text-decoration-color: var(--green); }
+.service-tab { border-color: var(--line); }
+.service-tags span { border-color: var(--line); border-radius: 0; }
+.portfolio { background: var(--ink); color: var(--paper); }
+.portfolio-heading > p, .portfolio-note, .project-details p { color: var(--paper); opacity: 1; }
+.portfolio .section-label, .project-details { border-color: var(--line-dark); }
+.project-type, .project-visit { color: var(--lime); }
+.project-grid { display: grid; grid-template-columns: minmax(0,1.14fr) minmax(0,1fr); gap: 72px 32px; align-items: start; }
+.project-card:nth-child(even) { margin-top: 88px; }
+.project-card { min-width: 0; }
+.project-visual { border-radius: 0; border: 1px solid var(--line-dark); }
+.project-card:focus-visible { outline-color: var(--lime); }
+.project-name-line h3 { font: 700 clamp(32px,3.5vw,50px)/1.06 var(--display); }
+.concept-image { border-radius: 0; }
+.process { background: var(--green); color: var(--paper); }
+.process .section-label, .process-step { border-color: var(--line-dark); }
+.process-intro > p, .process-step p, .process-step h3, .process-dial, .process .micro, .process-step .step-num { color: var(--paper); opacity: 1; }
+.process-rail { background: var(--line-dark); }
+.process-rail > span { background: var(--lime); }
+.faq details { border-color: var(--line); }
+.contact { background: var(--lime); color: var(--ink); }
+.contact-top, .contact-bottom { border-color: var(--ink); }
+.contact p, .contact .micro { color: var(--ink); }
+.footer-main, .footer-bottom { border-color: var(--line-dark); }
+.footer p, .footer a, .footer button, .footer-bottom { color: var(--paper); opacity: 1; }
+@media(max-width:740px) {
+  .project-grid { grid-template-columns: minmax(0,1fr); gap: 40px; }
+  .project-card:nth-child(even) { margin-top: 0; }
+  .portfolio-heading h2, .services-heading h2, .work-heading h2, .process-intro h2 { font-size: clamp(48px,10vw,72px); }
+  .process-intro { position: static; }
+}
