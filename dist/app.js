@@ -1,6 +1,7 @@
 import { services, concepts, clamp, buildBrief } from './model.js';
 import { startOrb } from './orb.js';
 import { setupMotion } from './motion.js';
+import { startWorld } from './world.js';
 const $ = (q, node = document) => node.querySelector(q);
 const $$ = (q, node = document) => [...node.querySelectorAll(q)];
 const systemMotion = matchMedia('(prefers-reduced-motion: reduce)');
@@ -228,6 +229,7 @@ reducedMotion.addEventListener('change', () => {
 });
 setupMotion({ motion: reducedMotion, getComparisonManual: () => comparisonManual, setComparison });
 startOrb($('#orb'), reducedMotion);
+startWorld(stage, reducedMotion);
 
 // No fake submission: a local project planner produces an exportable brief.
 const form = $('#project-form'); const storageKey = 'reachly-project-draft-v1'; let brief = '';
