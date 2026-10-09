@@ -43,3 +43,14 @@ test('header and footer use intact light and dark Reachly SVG lockups', () => {
     assert.equal(doc.querySelectorAll('.logo-star').length, 0);
   } finally { dom.window.close(); }
 });
+test('favicon, touch icon and manifest identify the approved brand', () => {
+  const dom = new JSDOM(readFileSync(resolve(root, 'dist/index.html'), 'utf8'));
+  try {
+    const doc = dom.window.document;
+    assert.equal(doc.querySelector('link[rel="icon"]').getAttribute('href'), 'assets/brand/reachly-icon.svg');
+    assert.equal(doc.querySelector('link[rel="alternate icon"]').getAttribute('href'), 'assets/brand/favicon.ico');
+    assert.equal(doc.querySelector('link[rel="apple-touch-icon"]').getAttribute('href'), 'assets/brand/reachly-icon-180.png');
+    assert.equal(doc.querySelector('link[rel="manifest"]').getAttribute('href'), 'assets/brand/site.webmanifest');
+    assert.equal(doc.querySelector('meta[name="theme-color"]').getAttribute('content'), '#05100E');
+  } finally { dom.window.close(); }
+});
