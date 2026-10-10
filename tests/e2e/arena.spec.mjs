@@ -300,16 +300,16 @@ test('design: approved brand tokens and proportionate lockups', async ({ page })
     });
     expect(ratioError).toBeLessThan(0.02);
     const width = page.viewportSize().width;
-    await expect(page.locator(selector)).toHaveCSS('width', (width <= 380 ? 112 : width <= 740 ? 128 : 172) + 'px');
+    await expect(page.locator(selector)).toHaveCSS('width', (selector.startsWith('.header') && width <= 740 ? 132 : 156) + 'px');
   }
-  await expect(page.locator('.header')).toHaveCSS('position', 'relative');
+  await expect(page.locator('.header')).toHaveCSS('position', 'sticky');
 });
 
 test('design: editorial hero hierarchy with contained device previews', async ({ page }) => {
   await page.goto('/');
   await page.evaluate(() => document.fonts.ready);
   await expect(page.locator('.hero-line').first()).toHaveCSS('-webkit-text-stroke-width', '1px');
-  await expect(page.locator('.hero-second em')).toHaveCSS('font-style', 'normal');
+  await expect(page.locator('.hero-solid')).toHaveText('BIG PRESENCE.');
   await expect(page.locator('.hero-stage')).toHaveCSS('overflow', 'clip');
   await expect(page.locator('.hero-stage')).toHaveCSS('contain', 'paint');
   await expect(page.locator('.hero-browser .browser-chrome')).toBeVisible();
@@ -327,17 +327,18 @@ test('design: editorial hero hierarchy with contained device previews', async ({
 
 test('design: intentional surface rhythm and horizontal client work', async ({ page }) => {
   await page.goto('/');
-  await expect(page.locator('.services')).toHaveCSS('background-color', 'rgb(250, 247, 240)');
+  await expect(page.locator('.services')).toHaveCSS('background-color', 'rgb(23, 70, 58)');
+  await expect(page.locator('.blueprint-sheet')).toHaveCSS('background-color', 'rgb(250, 247, 240)');
   await expect(page.locator('.project-card').first()).toHaveCSS('background-color', 'rgb(250, 247, 240)');
   await expect(page.locator('.process')).toHaveCSS('background-color', 'rgb(23, 70, 58)');
-  await expect(page.locator('.contact')).toHaveCSS('background-color', 'rgb(5, 16, 14)');
+  await expect(page.locator('.contact')).toHaveCSS('background-color', 'rgb(212, 231, 81)');
   await expect(page.locator('.footer')).toHaveCSS('background-color', 'rgb(5, 16, 14)');
   await expect(page.locator('.project-card')).toHaveCount(4);
   await expect(page.locator('.project-browser-bar')).toHaveCount(4);
   const first = await page.locator('.project-card').nth(0).boundingBox();
   const second = await page.locator('.project-card').nth(1).boundingBox();
   expect(second.x).toBeGreaterThan(first.x + first.width - 1);
-  expect(Math.abs(second.y - first.y)).toBeLessThan(1);
+  expect(Math.abs(second.y - first.y)).toBeLessThan(20); // Alternating tilted posters.
   expect(await page.locator('#project-rail').evaluate(el => el.scrollWidth > el.clientWidth)).toBe(true);
 });
 
@@ -364,7 +365,7 @@ test('design: unselected services and process numbers remain readable', async ({
     await expect(tab).toHaveCSS('color', 'rgb(5, 16, 14)');
   }
   for (const number of await page.locator('.process-step:not(.active) .step-number').all()) {
-    await expect(number).toHaveCSS('color', 'rgb(250, 247, 240)');
+    await expect(number).toHaveCSS('color', 'rgb(212, 231, 81)');
   }
 });
 
@@ -373,9 +374,10 @@ test('design: miniature browser footer does not overlap its action', async ({ pa
   await page.evaluate(() => document.fonts.ready);
   for (let concept = 0; concept < 3; concept++) {
     const gap = await page.locator('.coffee-site').evaluate(site => {
-      const pill = site.querySelector('.mock-pill').getBoundingClientRect();
-      const footer = site.querySelector('.mock-footer').getBoundingClientRect();
-      return footer.top - pill.bottom;
+      // Measure layout space: rotated 3D bounding boxes overlap even when text doesn't.
+      const top = el => { let value = 0; while (el && el !== site.offsetParent) { value += el.offsetTop; el = el.offsetParent; } return value; };
+      const pill = site.querySelector('.mock-pill'), footer = site.querySelector('.mock-footer');
+      return top(footer) - top(pill) - pill.offsetHeight;
     });
     expect(gap, `concept ${concept + 1} footer gap`).toBeGreaterThanOrEqual(3);
     await page.locator('.hero-stage').press('Enter');

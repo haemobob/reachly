@@ -1,6 +1,18 @@
 # Reachly × Arena — rebuilt UI contract
 
-## Current composition
+## Current pavilion iteration
+The previous poster implementation (`c42456e`) was retained in Git history, not rebuilt again. `e0cb871` introduced the immersive green pavilion; the continuation finishes its scroll and navigation behavior.
+
+Journey: **immersive hero → real client gallery → layered photographic manifesto → reverse marquees → service blueprint → concepts → comparison → horizontal process → FAQ → lime invitation → monumental footer**.
+
+- Full-bleed green hero, two monumental outlined/solid lines, original interactive WebGL pavilion and orbiting website concepts.
+- Desktop pinned hero orbit and native-scroll client gallery; keyboard/button input takes priority. Smaller screens use native horizontal browsing.
+- Staggered fullscreen menu, tilted manifesto parallax, rotating service blueprint, center-opening image blinds and horizontal process travel.
+- Sticky navigation; all-screen modal containment and local-only planner preserved.
+- Reduced-motion/pause/missing-library paths leave all five process steps readable. Wide device plane bounded at 1760px without bounding the full-bleed hero.
+- Real archives and exact adaptations: [animation sources](animation-sources.md). No new production dependency or Adidas asset.
+
+## Previous poster composition (historical)
 A Decide/Learn landing page with an Explore-style client rail. This version replaces `dist/style.css` and page compositions rather than layering cosmetic overrides. `dist/arena.css` now holds approved palette and font tokens only.
 
 Journey: **hero → client projects → photographic manifesto → services → design concepts → comparison → process → FAQ → invitation**.
@@ -39,4 +51,4 @@ Preserve five services, four exact client URLs, browser/phone concepts, illustra
 ## Limits and acceptance
 Generated prose is observational: dark-theme inference, reversed font roles and decimal-duration parsing were inaccurate. Cookie overlays obscure parts of captures. Check actual screenshots/CSS, not canvas counts or generated recommendations.
 
-The earlier CSS-led design was owner-rejected. Tests and code review did not prove visual transformation. Current original/reference/rebuilt captures show the changed structures; final aesthetic acceptance belongs to the owner. See `docs/design/qa.md` for real execution and limitations. No push, PR, merge or deployment without authorization.
+The earlier CSS-led design was owner-rejected. Tests and code review did not prove visual transformation. Current original/reference/rebuilt captures show the changed structures; final aesthetic acceptance belongs to the owner. See `docs/design/qa.md` for real execution and limitations. The owner authorized pushing this iteration to `reachlyid`; no merge, DNS change or deployment is included.

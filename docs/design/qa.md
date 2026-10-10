@@ -1,6 +1,19 @@
 # Reachlyid — rebuilt landing QA
 
-## Current result
+## Current pavilion iteration
+Browser report: `.artifacts/world/final-browser.json`, start **2026-10-10T03:56:24.574Z**: **151 passed, 14 intentional skips, 0 failures, 0 flaky results**. Command: `node.exe node_modules/@playwright/test/cli.js test --config .artifacts/arena/local-review.config.mjs --reporter=json`.
+
+Five viewport projects: 320/375/768/1024/1440px. Dedicated normal/reduced-motion loops cover 1024–3840px. Fourteen skips: eight duplicate wide loops, three historical mobile-only menu checks, three desktop-only pinned-gallery checks on smaller screens.
+
+Node: **34 passed**. Python: **579 elements / 70 unique IDs**, now checks every linked stylesheet, including `world.css`. Module syntax and whitespace pass. Brand hash contracts and four exact project URLs remain unchanged.
+
+New checks cover pavilion/fallback, device containment, horizontal scroll assistance and manual priority, pause removing pins/blinds, final-stage readability and contrasting focus on the lime invitation. Existing modal/planner/privacy/no-JS/blocked-GSAP/lifecycle tests remain intact. Obsolete poster/three-line/frame/surface assertions now describe the new composition; projected miniature bounding boxes were replaced with local-layout separation checks, not relaxed overlap limits.
+
+Actual captures: `.artifacts/world/hero-*.png`, `page-*.png`, wide normal/reduced-motion captures, `motion-client-gallery.png` and `motion-process.png`. Pinned gallery inspected at 80% travel; process shows later stages. Desktop/mobile miniatures visually inspected. Initial failures exposed paused-process clipping, mobile preview overflow, focus not revealing an entire tilted card, same-color invitation focus and ultra-wide perspective clipping; these were corrected.
+
+No physical-device, screen-reader, measured Web Vitals, Firefox/WebKit or hosted CI/deployment claim. Owner aesthetic acceptance remains separate from technical verification. `reachlyid` push is authorized; `main` is not changed.
+
+## Previous poster result (historical)
 This report covers the complete markup/stylesheet rebuild, not the earlier rejected CSS-led version. Local Windows 11, Node v26.7.0, Python 3.14.7. CI is configured for Node 24/Python 3.12 but has not run remotely.
 
 Final Chromium command: `node node_modules/@playwright/test/cli.js test --config .artifacts/arena/local-review.config.mjs --reporter=json > .artifacts/rebuild/final-browser.json`.

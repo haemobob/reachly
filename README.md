@@ -18,6 +18,7 @@ node --check dist/app.js
 node --check dist/model.js
 node --check dist/motion.js
 node --check dist/orb.js
+node --check dist/world.js
 npx --no-install playwright install chromium
 npm run test:browser
 ```
@@ -38,13 +39,13 @@ https://reachly-studio.craftymaple16.chatgpt.site
 
 ## Interactions
 
-- Explore the framed poster hero: drag/arrow-key rotation and click/Enter concept changes preserve the browser and phone previews.
-- Browse four confirmed client sites in the horizontal project rail using touch, keyboard links or previous/next controls.
+- Explore the immersive green pavilion: original WebGL, drag/arrow-key rotation, orbiting concepts, and click/Enter concept changes. A CSS pavilion remains visible when WebGL is unavailable.
+- Browse four confirmed client sites in the tilted horizontal rail. Desktop scrolling traverses a pinned gallery; touch, keyboard focus and previous/next controls retain priority.
 - Open the full-screen menu at any width; background interaction is isolated, focus is contained, and Escape returns to the close control.
 - The short brand statement uses the supplied Drive gooey text reveal and expanding image-spot components, adapted to vanilla HTML/JS. Each spot is a button with an accessible name that selects its concept on click, tap, or keyboard activation.
 - The before/after range is assisted by scroll until the visitor takes control; manual input remains authoritative for the page visit.
 - Five service tabs update the narrative, diagram, tags, and project-planner goal. Service and concept tabs support roving focus, arrows, Home, and End.
-- Concept photography opens through a scroll aperture. The five-stage process follows Discover, Plan, Create, Launch, Improve, with a responsive timeline and progress rail. Every step remains in ordinary flow.
+- Concept photography opens through a staggered blinds reveal. The five-stage process travels horizontally on desktop; pause, reduced motion and small screens expose every stage in ordinary flow.
 - Pause motion saves a local preference and removes GSAP triggers and styles. System reduced motion takes precedence. Meaningful content is readable without JavaScript or GSAP.
 - The project planner validates fields, recovers a local draft, exports plain text, supports clipboard copying, and offers draft erasure. **It does not send an inquiry.**
 
@@ -62,7 +63,7 @@ Local Chromium verification now covers real layout, keyboard controls, clipboard
 
 ## References and licenses
 
-- Adidas Arena informed visual scale and section variety. No Adidas branding or assets are used.
+- The verified Adidas Arena Ultra extraction supplies the composition and motion blueprint. Real Awwwards Pack source archives supplement it; see `docs/design/animation-sources.md`. No Adidas branding, licensed fonts or assets are used.
 - UI/UX Pro Max informed design review and interaction/accessibility decisions; it is not installed as a runtime dependency.
 - The Drive **Text Animations / 18** and **Hover Effects / 21** components are actually adapted in the statement section; source links and differences are documented in `DESIGN_NOTES.md`.
 - GSAP and ScrollTrigger **3.15.0** are vendored unmodified with their copyright and standard-license notices retained.

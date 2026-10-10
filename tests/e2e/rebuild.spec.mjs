@@ -1,12 +1,13 @@
 import { test, expect } from '@playwright/test';
 
-test('rebuild: poster composition replaces the old hero grid', async ({ page }) => {
+test('rebuild: immersive pavilion replaces the old poster grid', async ({ page }) => {
   await page.goto('/');
   await page.evaluate(() => document.fonts.ready);
-  await expect(page.locator('.hero-poster')).toHaveCSS('display', 'grid');
-  await expect(page.locator('.hero-photo')).toHaveCount(2);
+  await expect(page.locator('.hero-poster')).toHaveCount(0);
+  await expect(page.locator('#world-canvas')).toBeVisible();
+  await expect(page.locator('.world-fallback')).toHaveCount(1);
   await expect(page.locator('.hero-bottom')).toHaveCount(0);
-  await expect(page.locator('.hero-second em')).toHaveCSS('display', 'block');
+  await expect(page.locator('.hero-solid')).toHaveText('BIG PRESENCE.');
   if (page.viewportSize().width >= 1440) {
     const size = await page.locator('#hero-title').evaluate(el => parseFloat(getComputedStyle(el).fontSize));
     expect(size).toBeGreaterThan(135);
@@ -43,11 +44,11 @@ test('rebuild: close menu stays on-screen when opened further down the page', as
   await expect(page.locator('main')).not.toHaveAttribute('inert', '');
 });
 
-test('rebuild: dark sections keep bright visible keyboard focus', async ({ page }) => {
+test('rebuild: closing surfaces keep contrasting keyboard focus', async ({ page }) => {
   await page.goto('/');
   for (const selector of ['.contact .project-open', '.footer .privacy-open']) {
     await page.locator(selector).focus();
-    await expect(page.locator(selector)).toHaveCSS('outline-color', 'rgb(212, 231, 81)');
+    await expect(page.locator(selector)).toHaveCSS('outline-color', selector.startsWith('.contact') ? 'rgb(23, 70, 58)' : 'rgb(212, 231, 81)');
   }
 });
 
