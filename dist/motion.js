@@ -15,6 +15,7 @@ export function setupMotion({ motion, getComparisonManual, setComparison }) {
     $('.portfolio')?.style.removeProperty('clip-path');
     $$('.project-visual').forEach(el => el.style.removeProperty('clip-path'));
     $$('.goo-shell').forEach(el => el.classList.remove('goo-filter'));
+    document.body.classList.remove('gsap-active');
     if (motion.matches) return;
     document.body.classList.add('gsap-active');
     media = gsap.matchMedia();
@@ -53,12 +54,48 @@ export function setupMotion({ motion, getComparisonManual, setComparison }) {
         scrollTrigger: { trigger: '.project-grid', start: 'top 90%', end: 'top 40%', scrub: .3 }
       });
       if (context.conditions.desktop) {
-        // This is section-reading progress, not a current business stage.
-        // The stages share a row; vertical entry cannot select them in sequence.
-        gsap.fromTo('.process-rail > span', { scaleX: 0 }, { scaleX: 1, ease: 'none',
-          scrollTrigger: { trigger: '.process-track', start: 'top 75%', end: 'bottom 25%', scrub: .25 }
+        // Native scrolling + GSAP pin/scrub adapt Scroll Animation/9's master
+        // timeline. No Lenis: wheel, keyboard and touch retain browser behavior.
+        gsap.timeline({ scrollTrigger: { trigger: '.hero-world', start: 'top 12%', end: '+=65%', pin: true, scrub: .8, anticipatePin: 1, invalidateOnRefresh: true } })
+          .to('.hero-stage', { '--world-turn': 1.45, ease: 'none' }, 0)
+          .to('.hero-collage', { scale: .86, yPercent: -5, ease: 'none' }, 0)
+          .to('.hero-browser', { rotationZ: -18, xPercent: -10, ease: 'none' }, 0)
+          .to('.phone', { rotationZ: 22, xPercent: 12, ease: 'none' }, 0);
+        // Native scrollLeft preserves touch, focus reveal and button navigation.
+        const rail = $('#project-rail');
+        let railManual = false;
+        const manualRail = () => { railManual = true; };
+        for (const el of [rail, ...$$('[data-rail-dir]')]) {
+          for (const name of ['pointerdown', 'keydown', 'focusin', 'click']) {
+            el.addEventListener(name, manualRail);
+            removers.push(() => el.removeEventListener(name, manualRail));
+          }
+        }
+        ScrollTrigger.create({ id: 'client-gallery', trigger: rail, start: 'top 14%',
+          end: () => '+=' + Math.max(1, rail.scrollWidth - rail.clientWidth),
+          pin: true, anticipatePin: 1, invalidateOnRefresh: true,
+          onUpdate: self => { if (!railManual) rail.scrollLeft = self.progress * (rail.scrollWidth - rail.clientWidth); }
         });
+        gsap.fromTo('.blueprint-sheet', { rotation: -3, scale: .96 }, { rotation: 1.5, scale: 1, ease: 'none',
+          scrollTrigger: { trigger: '.services', start: 'top 80%', end: 'bottom 65%', scrub: .8 } });
+        gsap.timeline({ scrollTrigger: { trigger: '.process-track', start: 'top 42%',
+          end: () => '+=' + Math.max(400, $('.process-track').scrollWidth - $('.process-track').clientWidth),
+          pin: '.process', scrub: .8, invalidateOnRefresh: true } })
+          .fromTo('.process-rail > span', { scaleX: 0 }, { scaleX: 1, ease: 'none' }, 0)
+          .to('.process-track', { x: () => -Math.max(0, $('.process-track').scrollWidth - $('.process-track').clientWidth), ease: 'none' }, 0);
       }
+      gsap.fromTo('.manifesto-photo', { yPercent: 15, rotation: 12 }, { yPercent: -10, rotation: -4, ease: 'none',
+        scrollTrigger: { trigger: '.manifesto', start: 'top bottom', end: 'bottom top', scrub: .8 } });
+      // The inspected 30-blind source splits its masks into center-opening bars.
+      // Twelve DOM bars use that staggered scale reveal over Reachly's own image.
+      let blinds = $('.image-blinds');
+      if (!blinds) {
+        blinds = document.createElement('div'); blinds.className = 'image-blinds'; blinds.setAttribute('aria-hidden', 'true');
+        for (let i = 0; i < 12; i++) blinds.append(document.createElement('span'));
+        $('.concept-image').append(blinds);
+      }
+      gsap.fromTo('.image-blinds > span', { scaleY: 1 }, { scaleY: 0, stagger: .02, ease: 'power3.out',
+        scrollTrigger: { trigger: '.work', start: 'top 60%', end: 'top 5%', scrub: .8 } });
       if (context.conditions.pointer) {
         $$('.spotlight-button').forEach(button => {
           const card = button.querySelector('.spot-card');

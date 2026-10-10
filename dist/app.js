@@ -60,6 +60,8 @@ function closeMenu() {
   menuBackground.forEach(el => { el.inert = false; });
   if (restoreFocus) menuToggle.focus({ preventScroll: true });
   menu.classList.remove('open'); menu.inert = true;
+  window.gsap?.killTweensOf('#mobile-menu > a');
+  window.gsap?.set('#mobile-menu > a', { clearProps: 'transform,opacity' });
   document.body.classList.remove('menu-open');
   menuToggle.setAttribute('aria-expanded', 'false'); menuToggle.setAttribute('aria-label', 'Open menu');
 }
@@ -67,6 +69,9 @@ menuToggle.addEventListener('click', () => {
   if (menuToggle.getAttribute('aria-expanded') === 'true') { closeMenu(); return; }
   menuToggle.setAttribute('aria-expanded', 'true'); menuToggle.setAttribute('aria-label', 'Close menu');
   menu.classList.add('open'); menu.inert = false;
+  // Navigation Menus/9's staggered timeline, retimed with Arena's expo exit.
+  if (window.gsap && !reducedMotion.matches) window.gsap.fromTo('#mobile-menu > a',
+    { y: 60, opacity: 0 }, { y: 0, opacity: 1, duration: .8, stagger: .08, delay: .18, ease: 'expo.out', clearProps: 'transform,opacity' });
   menuBackground.forEach(el => { el.inert = true; });
   document.body.classList.add('menu-open');
   $('a', menu).focus();
@@ -97,6 +102,13 @@ railButtons.forEach(button => button.addEventListener('click', () => {
   projectRail.scrollBy({ left: Number(button.dataset.railDir) * step, behavior: reducedMotion.matches ? 'auto' : 'smooth' });
 }));
 projectRail.addEventListener('scroll', syncRailButtons, { passive: true });
+projectRail.addEventListener('focusin', event => {
+  const card = event.target.closest('.project-card');
+  if (!card) return;
+  const r = card.getBoundingClientRect(), view = projectRail.getBoundingClientRect();
+  const travel = r.right > view.right ? r.right - view.right + 8 : r.left < view.left ? r.left - view.left - 8 : 0;
+  if (travel) projectRail.scrollBy({ left: travel, behavior: 'instant' });
+});
 addEventListener('resize', syncRailButtons);
 syncRailButtons();
 
@@ -225,6 +237,8 @@ reducedMotion.addEventListener('change', () => {
   if (reducedMotion.matches) {
     $$('.magnetic').forEach(el => el.style.transform = '');
     conceptAnimation?.cancel();
+    window.gsap?.killTweensOf('#mobile-menu > a');
+    window.gsap?.set('#mobile-menu > a', { clearProps: 'transform,opacity' });
   }
 });
 setupMotion({ motion: reducedMotion, getComparisonManual: () => comparisonManual, setComparison });
