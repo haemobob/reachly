@@ -1,0 +1,17 @@
+---
+const { exhibition = false } = Astro.props;
+const path = Astro.url.pathname;
+const links = [{label:'Work',url:'/work/'},{label:'Services',url:'/services/'},{label:'About',url:'/about/'},{label:'Possibilities',url:'/possibilities/'}];
+---
+<header class:list={['site-header', { 'site-header--dark': exhibition }]}>
+<a href="/" class="brand" aria-label="Reachly Studio home"><img src={`/brand/reachly-logo-${exhibition ? 'white' : 'black'}.svg`} alt="Reachly" width="153" height="48" /><span class="brand-edition">{exhibition ? 'Possibilities' : 'Independent digital studio'}</span></a>
+<nav class="desktop-nav" aria-label="Main navigation">
+{exhibition ? <a href="/" class="back-studio">↖ Back to Studio</a> : links.map(link=><a href={link.url} aria-current={path.startsWith(link.url) ? 'page' : undefined}>{link.label}{link.label==='Possibilities'&&<span class="tiny-dot" aria-hidden="true"></span>}</a>)}
+</nav>
+<div class="header-actions"><button class="motion-toggle" aria-pressed="false" aria-label="Pause motion"><span aria-hidden="true">Ⅱ</span></button><a class="header-contact" href="/contact/">Let's talk <span aria-hidden="true">↗</span></a><button class="menu-open" aria-haspopup="dialog" aria-controls="site-menu">Menu <span aria-hidden="true">＋</span></button></div>
+</header>
+<dialog id="site-menu" class="site-menu" aria-label="Site navigation">
+<div class="menu-top"><a href="/" class="brand"><img src="/brand/reachly-logo-black.svg" alt="Reachly" width="153" height="48" /></a><button class="menu-close">Close <span aria-hidden="true">×</span></button></div>
+<nav aria-label="Expanded navigation">{[{label:'Studio',url:'/'},...links,{label:'Discuss your project',url:'/contact/'}].map((link,index)=><a href={link.url}><span class="menu-number">0{index+1}</span><span>{link.label}</span><span aria-hidden="true">↗</span></a>)}</nav>
+<p class="menu-note">Good design opens possibilities. Useful technology takes them further.</p>
+</dialog>

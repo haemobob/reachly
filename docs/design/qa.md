@@ -1,67 +1,65 @@
-# Reachlyid — rebuilt landing QA
+# Reachly Studio & Possibilities — QA
 
-## Current pavilion iteration
-Browser report: `.artifacts/world/final-browser.json`, start **2026-10-10T03:56:24.574Z**: **151 passed, 14 intentional skips, 0 failures, 0 flaky results**. Command: `node.exe node_modules/@playwright/test/cli.js test --config .artifacts/arena/local-review.config.mjs --reporter=json`.
+## Result and scope
 
-Five viewport projects: 320/375/768/1024/1440px. Dedicated normal/reduced-motion loops cover 1024–3840px. Fourteen skips: eight duplicate wide loops, three historical mobile-only menu checks, three desktop-only pinned-gallery checks on smaller screens.
+**Ready for branch delivery and preview review. Not a production launch.**
 
-Node: **34 passed**. Python: **579 elements / 70 unique IDs**, now checks every linked stylesheet, including `world.css`. Module syntax and whitespace pass. Brand hash contracts and four exact project URLs remain unchanged.
+Local verification: Windows 11, Node v26.7.0, production Astro build at `http://127.0.0.1:4321/`. CI is configured for Node 24. This report does not imply hosted CI success, owner aesthetic acceptance or full WCAG conformance.
 
-New checks cover pavilion/fallback, device containment, horizontal scroll assistance and manual priority, pause removing pins/blinds, final-stage readability and contrasting focus on the lime invitation. Existing modal/planner/privacy/no-JS/blocked-GSAP/lifecycle tests remain intact. Obsolete poster/three-line/frame/surface assertions now describe the new composition; projected miniature bounding boxes were replaced with local-layout separation checks, not relaxed overlap limits.
+The previous site's implementation and QA are preserved at `6ee7d3f2a66f491dc7e06995de28ecf15b73516f`; this report replaces its historical pavilion/landing checks rather than pretending they test the new website.
 
-Actual captures: `.artifacts/world/hero-*.png`, `page-*.png`, wide normal/reduced-motion captures, `motion-client-gallery.png` and `motion-process.png`. Pinned gallery inspected at 80% travel; process shows later stages. Desktop/mobile miniatures visually inspected. Initial failures exposed paused-process clipping, mobile preview overflow, focus not revealing an entire tilted card, same-color invitation focus and ultra-wide perspective clipping; these were corrected.
+## Final executed checks
 
-No physical-device, screen-reader, measured Web Vitals, Firefox/WebKit or hosted CI/deployment claim. Owner aesthetic acceptance remains separate from technical verification. `reachlyid` push is authorized; `main` is not changed.
+| Check | Result |
+| --- | --- |
+| `npm run build` | 17 static pages and sitemap; successful |
+| `npm test` | 25 model, content and simulated-DOM tests passed |
+| `npx --no-install astro check` | 36 files, zero errors/warnings/hints |
+| `npx --no-install playwright test -c playwright.dual.config.mjs --reporter=json` | 44 passed, 2 intentional skips, zero failures/flaky results |
+| `npm audit` | Zero known vulnerabilities across production and development dependencies |
+| `git diff --check` | Passed; Windows LF/CRLF conversion notices are not whitespace failures |
+| Approved identity comparison | Black/white logo, point icon and favicon equal historical bytes |
 
-## Previous poster result (historical)
-This report covers the complete markup/stylesheet rebuild, not the earlier rejected CSS-led version. Local Windows 11, Node v26.7.0, Python 3.14.7. CI is configured for Node 24/Python 3.12 but has not run remotely.
+Browser run began `2026-10-11T15:43:15.150Z`. Two desktop skips cover the mobile modal-menu and mobile touch-target checks; both execute and pass in the mobile project. Reports: `.artifacts/dual/final-browser.json`, `final-audit.json`.
 
-Final Chromium command: `node node_modules/@playwright/test/cli.js test --config .artifacts/arena/local-review.config.mjs --reporter=json > .artifacts/rebuild/final-browser.json`.
+## Real-browser behaviors
 
-Report start: 2026-10-09T22:14:46.979Z. **129 passed, 11 intentional skips, 0 failures, 0 flaky results.**
+- Studio and Possibilities inspected at 1440×900 and touch-emulated 390×844, including intermediate scroll positions, not just their openings. Responsive tests also measure the journeys at 320, 375, 768, 1024, 1440, 1920, 2560 and 3840px.
+- Supporting routes, slashless navigation, local links, heading structure, eager imagery and absence of page exceptions verified. Custom 404 source/content is covered by model checks.
+- Native chapter entry, sticky-navigation alignment, browser Back and return from Contact verified. ScrollTrigger initialization waits for load/fonts to avoid stale initial scroll restoration.
+- Perspective selection, both sample workflows, completion disclaimer, pause/resume and system reduced motion verified.
+- Renderer import failure, context loss plus later perspective changes, back-forward-cache lifecycle, and preference changes while the renderer import is delayed verified. The last two delayed-import tests first reproduced unwanted mounting/duplicate canvases; one pending-load guard plus a post-import preference check fixed them.
+- Mobile modal containment/Escape/focus recovery, exhibition 44px hit areas and ordinary content/links with JavaScript disabled verified.
+- Brief validation focuses the first invalid field. Review uses literal visitor text, editing/clearing preserves intended state, copy recovers with manual selection, and TXT download matches the prepared brief. Personal input is neither submitted nor persisted.
+- Studio request inspection confirms it does not download the exhibition renderer. Both journeys made zero third-party requests and had no page exceptions or HTTP error responses during the final capture pass.
 
-| Width | Passed | Intentional skip |
-|---|---:|---:|
-| 320 | 26 | 2 |
-| 375 | 26 | 2 |
-| 768 | 25 | 3 |
-| 1024 | 25 | 3 |
-| 1440 | 27 | 1 |
+## Accessibility and visual review
 
-Eight skips avoid duplicating wide-layout loops on every project; those loops run at 1024/1440/1920/2560/3840 in normal and reduced motion. Three skips belong to the old mobile-only menu characterization; new all-screen menu tests run at every width, including desktop.
+Axe WCAG A/AA checks pass on Studio, Possibilities, Contact and Services in desktop/mobile Chromium. Mobile Lighthouse navigation audits returned 100 in accessibility, best practices, SEO and agentic browsing for both experiences. These audits **exclude performance**. Reports are archived as `.artifacts/dual/lighthouse-studio.json` and `lighthouse-possibilities.json`.
 
-`npm test`: **34 passed**, no failures/skips. Python validator: **563 elements, 68 unique IDs**, CSS/fallback/JS target and deployment checks pass. All four runtime modules pass `node --check`; `git diff --check` passes. `npm audit`: zero known vulnerabilities. Brand tests preserve source-kit and runtime-copy hashes.
+Visual critique addressed true italic delivery, correct capture proportions, caption contrast, section rhythm, the Studio rotating orbit's responsive geometry, chapter landing alignment and mobile control size. Evidence: opening/full-page/section PNGs and `preview-evidence.json` under `.artifacts/dual/`. Reproduce with `node scripts/capture-preview.mjs` against the local built preview.
 
-The final browser run used the ignored existing-server config at **4173**, avoiding an earlier managed-server timeout. Port 4174 is the owner preview; origin-guard tests remain restricted to 4173 and were not weakened.
+The original Reachly logo is intact; separate point graphics animate. Real screenshot provenance, visible Sellaku source branding and capture limitations are documented in `project-imagery.md`. No fabricated results/testimonials/personnel are used. The workflow is explicitly an in-house sample, not a delivery integration.
 
-## Verified behavior
-- All-screen menu: background inerting, first-link focus, Tab/Shift+Tab containment strictly within the declared modal, Escape/restoration, link close, native-planner handoff, and on-screen close control after opening further down the page.
-- Native project rail: internal overflow, button browsing, keyboard focus revealing the fourth card, no document overflow. Four approved client URLs and safe link attributes preserved.
-- Five services, roving focus/arrows/Home/End, model-driven content and planner goal propagation; three concepts and image-spot activation.
-- Native form validation, literal visitor text, local draft recovery, clipboard, plain-text download, editing and erasure. No planner data submission; network guards remain intact.
-- Reduced motion, saved pause, normal GSAP setup/cleanup cycles, no-JavaScript readable primary content and blocked-GSAP fallback.
-- Exact brand palette/logo ratios; poster hierarchy, native rail geometry, readable inactive states, 44px image-spot targets and bright dark-surface focus.
-- All three miniature hero concepts retain action/footer separation. Wide checks measure phone ratio, transformed right/bottom edges, three visual title lines and frame containment.
+## Performance: measured conditions and limits
 
-## Visual evidence
-`.artifacts/rebuild/geometry.json` records 320/375/768/1024/1440/2560/3840: zero document overflow and no page exceptions in every capture. Phone ratio remains approximately 0.45. Parent clipping is not treated as proof that transformed devices fit.
+Local, unthrottled Chromium capture measurements before scrolling:
 
-Seven full-page captures plus section captures were generated. Actual screenshots inspected include desktop/mobile/ultra-wide heroes, client rail, 320px manifesto/comparison, 768px services, 1024px process, desktop concept/menu/invitation. Browser suite also captures every section and both native dialogs at five widths.
+| Experience | Desktop LCP / CLS | Mobile LCP / CLS |
+| --- | --- | --- |
+| Studio | 152ms / 0.01358 | 140ms / 0 |
+| Possibilities | 92ms / 0.00237 | 116ms / 0 |
 
-Original pre-rebuild commit `8e759f8db016f0cff7c979d6618ea832a0222338` static output was archived locally and served only on loopback 4175. Matching before/after viewport and hero captures at **320, 1440 and 2560px** show the original versus rebuilt layouts. 1440px client-work captures show offset gallery versus native horizontal rail. `.artifacts/rebuild/rebuild-comparison.png` is the owner-facing comparison. Reference scroll 000/017/033 was revisited; extraction screenshots have cookie-overlay limitations.
+These are loopback observations, **not production Core Web Vitals**, mobile-device benchmarks or a performance Lighthouse score. INP has not been established. Resource Timing recorded about 463KB of encoded response bodies for Studio and 595KB for Possibilities, not uncached end-to-end wire totals.
 
-## Acceptance and review
-The original CSS-led iteration was rejected by the owner. Prior passing tests/review did not establish visual acceptance and do not certify this rebuild. The current page replaces markup and the legacy stylesheet, reorders the journey and adds new rail/menu interaction models. Original/reference/revised screenshots substantiate those changes, not an exact clone or automatic aesthetic approval.
+The build retains a chunk-size warning for the isolated Three.js renderer. Its observed encoded response body is about 130KB; it is deferred to the exhibition and not requested by Studio. The renderer caps pixel ratio at 1.5 and stops animation offscreen/when hidden. GPU fallback remains available. No warning threshold was raised to conceal this trade-off.
 
-A read-only dependency audit identified required runtime selectors and obsolete visual contracts. Only old equal-top hero/offset-gallery/surface/bounded-frame assumptions were adapted. Behavior, privacy and safety tests were retained; new menu/rail and three-concept separation checks expand coverage.
+## Review and release boundaries
 
-Independent read-only Ponytail review found two concrete issues, both fixed after focused RED reproduction:
-1. Close control outside the declared modal: moved inside the menu, inerted the entire external header and confined both forward/reverse keyboard focus to the dialog. Native-planner handoff and opener restoration pass at all five widths.
-2. Horizontal process still used vertical stage selection/scaleY: removed obsolete per-stage active selection and hidden dial, and changed the horizontal rail to scaleX section-reading progress. New normal-motion checks verify no stage triggers/false active stage, increasing horizontal fill and unchanged vertical thickness at desktop widths. Smaller layouts keep all five steps visible.
+Reviewed connected motion, renderer, navigation, brief-model/contact, route/content and CI flows for correctness, privacy, lifecycle recovery and unnecessary work. Expected load: static public pages with per-visitor local interaction, no shared application mutations or database. Removed tracked build output and obsolete tests; the original remains in Git history.
 
-The Node lifecycle assertion now checks each retained effect's actual trigger rather than demanding the old count inflated by five obsolete stage triggers. Cleanup/manual-input guarantees remain intact. The parent verified fixes in the full suite; the independent reviewer did not rerun the amended diff. A separate five-width menu rerun also passed after adding reverse-Tab assertions.
+**Commercial-launch dependency:** no verified inquiry receiver was supplied. Contact prepares/copies/downloads a brief locally. It does not send it. Confirm a receiver, its data handling and user consent before adding submission or announcing launch.
 
-## Limits and delivery boundary
-No owner-approved pixel-diff baseline exists: automated visual regression is **INCONCLUSIVE**. Physical-device touch/performance, full axe/screen-reader review, Firefox/WebKit, measured production Web Vitals and hosted CI/deployment are not verified. Final aesthetic acceptance remains with the owner.
+No owner-approved pixel-diff baseline exists: automated visual regression acceptance is **INCONCLUSIVE**. Physical-device performance, screen-reader testing, Firefox/WebKit, field INP and final owner aesthetic acceptance remain unverified. Automated accessibility scores cannot establish full conformance.
 
-No push, PR, merge, DNS change or deployment. Local rebuilt preview: http://127.0.0.1:4174/.
+Work is scoped to `reachlyid`. Do not open a PR, merge, modify `main`, or manually deploy to production. Git publication and any existing Git-triggered preview are verified separately from these local checks.

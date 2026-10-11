@@ -1,0 +1,29 @@
+---
+import Base from '../../layouts/Base.astro';
+import { projects } from '../../data/content';
+import '../../styles/pages.css';
+---
+<Base title="Selected work" description="Explore four confirmed Reachly client website projects, from furniture discovery to engineering and digital communities.">
+  <section class="shell page-intro work-intro">
+    <p class="eyebrow">Reachly Studio / Selected work</p>
+    <h1 class="display page-title">Different businesses.<br /><em>A clearer presence.</em></h1>
+    <div class="intro-tail"><span class="folio">01—04</span><p class="lede">Four client websites. Four different contexts. A collection of digital places built around what a business needs to explain.</p></div>
+  </section>
+  <section class="shell work-collection" aria-label="Project collection">
+    {projects.map((project, index) => (
+      <article class:list={['work-feature', { 'work-feature--offset': index % 2 === 1 }]}>
+        <a class="project-image-link" href={`/work/${project.slug}`} aria-label={`Read the ${project.name} project note`} style={`--project-accent:${project.accent}`}>
+          <img src={project.image} alt={`${project.name} website preview`} width="1440" height={project.slug === 'sellaku' ? 845 : 960} loading={index === 0 ? 'eager' : 'lazy'} />
+          <span class="image-corner" aria-hidden="true">↗</span>
+        </a>
+        <div class="project-caption"><div><p class="eyebrow">{project.category}</p><h2><a href={`/work/${project.slug}`}>{project.name}</a></h2></div><span class="folio">0{index + 1}</span></div>
+        <p class="project-summary">{project.summary}</p>
+      </article>
+    ))}
+  </section>
+  <section class="shell section-space project-index" aria-labelledby="index-title">
+    <div><p class="eyebrow">The direct route</p><h2 class="display" id="index-title">Work, at a glance.</h2><p class="muted">Project notes describe the websites and their subjects. They do not claim measured business results.</p></div>
+    <ul>{projects.map(project => <li><a href={`/work/${project.slug}`}><span>{project.name}</span><span class="arrow" aria-hidden="true">↗</span></a></li>)}</ul>
+  </section>
+  <section class="closing-panel"><div class="shell"><p class="eyebrow">Your context comes next</p><h2 class="display">What does your business<br />need to make clear?</h2><a class="button button--dark" href="/contact">Prepare your project brief <span aria-hidden="true">↗</span></a></div></section>
+</Base>

@@ -1,76 +1,55 @@
-# Reachly
+# Reachly — Studio & Possibilities
 
-An English-language website for Reachly’s Indonesian SME services: website design and development, digital presence, digital strategy, business automation, and foundational SEO. Approved lime, ink, cream, and deep green; Arena-inspired editorial layouts; local concept photography; distinct service diagrams; and purposeful GSAP motion.
+One identity, two ways in. An original website for Reachly's Indonesian SME audience, grounded in the company profile and intact brand kit.
 
-`COMPANY_PROFILE.md` is the owner-supplied source of truth. `DESIGN_NOTES.md` records the design, exact Drive components adapted, motion behavior, and verification limits.
+- **Studio `/`**: editorial business journey, real portfolio, five services, process, About and project brief.
+- **Possibilities `/possibilities/`**: authored signal field, widening aperture, illustrative workflow and invitation back to Studio.
 
-## Development and deployment
+## Run and verify
 
-The deployable static website is in `dist/`. HTML, CSS, native ES modules, and locally vendored GSAP require **no build step**. All photos, fonts, and runtime scripts are local. Node dependencies are development-only: testing and SkillUI reference extraction. They are not served or installed in production.
-
-For local checks, use Node 24.15+ (on the Node 24 line) and Python 3.12:
+Use an Astro-supported Node version; CI uses Node 24.
 
 ```sh
 npm ci
+npm run dev
+# Production-build preview:
+npm run build
+npm run preview
+# Checks:
 npm test
-python tests/check_site.py
-node --check dist/app.js
-node --check dist/model.js
-node --check dist/motion.js
-node --check dist/orb.js
-node --check dist/world.js
+npx --no-install astro check
 npx --no-install playwright install chromium
 npm run test:browser
 ```
 
-Preview locally: `python -m http.server 4174 --bind 127.0.0.1 --directory dist`, then open http://127.0.0.1:4174/.
+Open `http://127.0.0.1:4321/` and `http://127.0.0.1:4321/possibilities/`.
+On Windows/Git Bash use `npm.cmd` if `npm` does not resolve. Astro 7 tracks preview instances: stop a tracked preview with `npx astro preview stop`, or run a deliberately separate foreground preview with `npm run preview -- --ignore-lock`.
 
-The `reachlyid` branch uses project-local SkillUI 1.3.4 with real Ultra extraction:
+## Architecture
 
-```sh
-npx --no-install skillui --url https://www.adidasarena.com/ --mode ultra --name adidas-arena --out design/reference --format design-md --no-skill
-```
+Astro static pages, TypeScript, authored CSS, locally hosted Fraunces/Manrope, GSAP/ScrollTrigger. Three.js is dynamically imported only by the exhibition after idle time. Studio does not request the renderer. Meaningful content is HTML; authored SVG artwork remains available when WebGL fails, is disabled or loses its context. System reduced motion overrides a saved pause preference. No wheel interception or custom scrolling is used.
 
-Raw reference captures are ignored and never deployed. Read `docs/design/arena-adaptation.md` for observed evidence and extraction pitfalls. The approved kit backup is in `brand/Reachly-Brand-Kit/`; the eight served identity assets are in `dist/assets/brand/`. Ponytail coding/review guidance is pinned in `docs/agent/` and activated through `AGENTS.md`.
+- `src/data/content.ts`: confirmed projects, approved services and intended process.
+- `src/layouts/`, `src/components/`: shared identity/navigation/document shell.
+- `src/pages/`: both experiences and supporting routes.
+- `src/scripts/`: route-specific progressive enhancements.
+- `src/lib/`: pure brief, motion and sample workflow models.
+- `public/brand/`: intact identity assets.
+- `public/images/`: actual client captures; provenance in `docs/design/project-imagery.md`.
+- `scripts/render-social.mjs`: regenerates the checked-in raster share image using the official logo.
 
-For Vercel, import this repository with **Root Directory left at the repository root**. The committed `vercel.json` selects **Other**, skips installation and building, and serves **dist**. This prevents a root 404 when the HTML entry point is under `dist/`. After a configuration change, deploy the latest `main` commit; redeploying an older commit will not include the fix. Connect `reachly.id` through the host’s domain settings using the records it provides. Domain DNS and a public launch are separate from this owner-private preview:
+`dist/` is generated and ignored, not source. The previous site and tests remain recoverable at Git commit `6ee7d3f2a66f491dc7e06995de28ecf15b73516f`.
 
-https://reachly-studio.craftymaple16.chatgpt.site
+## Inquiry and release boundary
 
-## Interactions
+The company profile supplies no verified email, phone, WhatsApp or submission receiver. `/contact/` therefore prepares a brief locally with review, edit, copy, TXT download and clear. It does **not** send an inquiry or persist personal entries. Connect an owner-confirmed delivery channel and update the privacy explanation before commercial launch. No client outcomes, biographies, testimonials or contact details are invented.
 
-- Explore the immersive green pavilion: original WebGL, drag/arrow-key rotation, orbiting concepts, and click/Enter concept changes. A CSS pavilion remains visible when WebGL is unavailable.
-- Browse four confirmed client sites in the tilted horizontal rail. Desktop scrolling traverses a pinned gallery; touch, keyboard focus and previous/next controls retain priority.
-- Open the full-screen menu at any width; background interaction is isolated, focus is contained, and Escape returns to the close control.
-- The short brand statement uses the supplied Drive gooey text reveal and expanding image-spot components, adapted to vanilla HTML/JS. Each spot is a button with an accessible name that selects its concept on click, tap, or keyboard activation.
-- The before/after range is assisted by scroll until the visitor takes control; manual input remains authoritative for the page visit.
-- Five service tabs update the narrative, diagram, tags, and project-planner goal. Service and concept tabs support roving focus, arrows, Home, and End.
-- Concept photography opens through a staggered blinds reveal. The five-stage process travels horizontally on desktop; pause, reduced motion and small screens expose every stage in ordinary flow.
-- Pause motion saves a local preference and removes GSAP triggers and styles. System reduced motion takes precedence. Meaningful content is readable without JavaScript or GSAP.
-- The project planner validates fields, recovers a local draft, exports plain text, supports clipboard copying, and offers draft erasure. **It does not send an inquiry.**
+No trackers or third-party runtime requests are introduced. Only the non-personal motion preference is stored locally.
 
-## Company claims and contact
+`vercel.json` describes a later-approved Astro build (`npm ci`, `npm run build`, `dist` output). It does not deploy the website. Work and delivery belong to `reachlyid`; do not merge, change `main`, or deploy to production without separate authorization. Canonical metadata and sitemap use the approved `https://reachly.id` domain and exclude query strings.
 
-No verified official contact address, WhatsApp number, submission endpoint, pricing, company founding date, or measured customer results have been provided. The owner has confirmed Crypto Radius, Crypto Galaxy, Sellaku, and Mac One Indonesia as client website projects; they are shown with live links and project imagery. Unknown facts are omitted from public copy. The attached profile’s internal TBD fields remain in the source document.
+## Design and evidence
 
-Reusable software, AI-assisted tools, productized automation, Meta Ads, and deeper analytics are explicitly future directions or options. The separate café, florist, and interior concept showcase remains illustrative. Hosting, maintenance, subscriptions, and support require agreed scope. No analytics or advertising trackers are included.
+`COMPANY_PROFILE.md` is factual authority; `brand/Reachly-Brand-Kit/` contains the established identity source. `.claude/plans/reachly-dual-experience.plan.md` is the approved creative foundation; the adjacent Shopify reference study records actual inspection. `DESIGN_NOTES.md` explains the implementation. `docs/design/qa.md` records results and limits. Local evidence goes in `.artifacts/dual/` and is not published. Runtime/font notices are in `public/THIRD_PARTY_NOTICES.txt`.
 
-## Validation
-
-Node tests check actual simulated-DOM interactions, structural rebuilding, local privacy, company facts, motion cleanup and exact asset copies. Real Chromium checks the rebuilt menu, native project rail, planner and responsive layout at 320, 375, 768, 1024 and 1440px; dedicated normal/reduced-motion tests extend hero scaling through 3840px. Parsed HTML/CSS and module syntax are checked separately. `docs/design/qa.md` records exact current results. GitHub Actions is configured to run the suites and retain evidence, but no hosted run is claimed.
-
-Local Chromium verification now covers real layout, keyboard controls, clipboard/download, privacy erasure, no-JavaScript and blocked-GSAP fallbacks, and motion lifecycle. Screenshots are saved under `.artifacts/arena/` and `.artifacts/rebuild/`; matching-width original/rebuilt captures include 320, 1440 and 2560px. See `docs/design/qa.md` for exact results and visual-review limits. Physical devices, screen readers, production hosting, and measured Web Vitals are not verified by this suite.
-
-## References and licenses
-
-- The verified Adidas Arena Ultra extraction supplies the composition and motion blueprint. Real Awwwards Pack source archives supplement it; see `docs/design/animation-sources.md`. No Adidas branding, licensed fonts or assets are used.
-- UI/UX Pro Max informed design review and interaction/accessibility decisions; it is not installed as a runtime dependency.
-- The Drive **Text Animations / 18** and **Hover Effects / 21** components are actually adapted in the statement section; source links and differences are documented in `DESIGN_NOTES.md`.
-- GSAP and ScrollTrigger **3.15.0** are vendored unmodified with their copyright and standard-license notices retained.
-- Jakub Antalik’s `thinking-orbs` geometry is adapted under MIT, with its notice in `dist/THIRD_PARTY_LICENSES.txt`.
-- Concept photography is from Unsplash photo IDs `photo-1442512595331-e89e73853f31`, `photo-1494438639946-1ebd1d20bf85`, and `photo-1490750967868-88aa4486c946`.
-- Locally hosted Barlow Condensed and Manrope font license notices accompany the assets.
-
-The current UI replaces the old page composition and legacy stylesheet, retaining contained concept artwork and existing motion fallbacks. Design sources and verification limits are recorded in `DESIGN_NOTES.md`.
-
-Browser and mobile concept previews are retained by owner preference. Services text is contrast checked; scroll transitions reveal actual portfolio content.
+Shopify informed the division of visitor jobs, not copied branding or assets. SkillUI/Adidas Arena and the Awwwards Pack informed scale, rhythm and interaction principles. The new Reachly compositions and shader are original. GitHub Actions is configured for the current tests; configuration alone is not a claim that a hosted run passed.

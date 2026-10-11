@@ -1,4 +1,6 @@
 node_modules/
+dist/
+.astro/
 .sites-runtime/
 .openai/runtime/
 .DS_Store
