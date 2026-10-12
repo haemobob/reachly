@@ -1,5 +1,7 @@
 # Reachly Studio & Possibilities — QA
 
+**Historical verification of the preceding implementation.** For the current continuous-world revision, read [The living line — verification](continuity-qa.md). Counts, runtime isolation and visual observations below apply to the earlier version, not the current ribbon world.
+
 ## Result and scope
 
 **Ready for branch delivery and preview review. Not a production launch.**

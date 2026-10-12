@@ -8,7 +8,7 @@ for (const finalPreference of ["reduce", "no-preference"]) {
     const gate = new Promise((resolve) => {
       release = resolve;
     });
-    await page.route("**/*signal-field*.js", async (route) => {
+    await page.route("**/*ribbon-world*.js", async (route) => {
       requested = true;
       await gate;
       await route.continue();
@@ -25,7 +25,7 @@ for (const finalPreference of ["reduce", "no-preference"]) {
       );
     }
     const downloaded = page.waitForResponse((response) =>
-      /signal-field.*\.js/.test(response.url()),
+      /ribbon-world.*\.js/.test(response.url()),
     );
     release();
     await (await downloaded).finished();
@@ -47,19 +47,19 @@ test("chapter entry aligns the section below its sticky navigation", async ({
 }) => {
   await page.goto("/possibilities/#frame");
   await page.evaluate(() => document.fonts.ready);
-  await expect
-    .poll(async () =>
-      page.locator("#frame").evaluate((e) => e.getBoundingClientRect().top),
-    )
-    .toBeLessThanOrEqual(95);
-  expect(
-    await page.locator("#frame").evaluate((e) => e.getBoundingClientRect().top),
-  ).toBeGreaterThanOrEqual(50);
+  const gap = () =>
+    page.evaluate(
+      () =>
+        document.querySelector("#frame").getBoundingClientRect().top -
+        document.querySelector(".chapter-nav").getBoundingClientRect().bottom,
+    );
+  await expect.poll(gap).toBeGreaterThanOrEqual(0);
+  await expect.poll(gap).toBeLessThanOrEqual(26);
 });
 test("renderer failure preserves the exhibition and controls", async ({
   page,
 }) => {
-  await page.route("**/*signal-field*", (route) => route.abort());
+  await page.route("**/*ribbon-world*", (route) => route.abort());
   await page.goto("/possibilities/");
   await expect(page.locator("#signal-art canvas")).toHaveCount(0);
   await expect(page.locator(".signal-fallback")).toBeVisible();
@@ -164,11 +164,14 @@ test("all local links in built HTML resolve", async ({ page, request }) => {
 });
 test("main content and ordinary links remain usable without JavaScript", async ({
   browser,
-}) => {
-  const context = await browser.newContext({ javaScriptEnabled: false });
+}, testInfo) => {
+  const context = await browser.newContext({
+    javaScriptEnabled: false,
+    baseURL: testInfo.project.use.baseURL,
+  });
   const page = await context.newPage();
   for (const path of ["/", "/possibilities/", "/contact/"]) {
-    await page.goto("http://127.0.0.1:4321" + path);
+    await page.goto(path);
     await expect(page.locator("h1")).toBeVisible();
     await expect(page.locator('footer a[href="/work/"]')).toBeVisible();
   }

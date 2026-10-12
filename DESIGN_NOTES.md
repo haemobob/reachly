@@ -1,5 +1,7 @@
 # Reachly — a point becomes a presence
 
+**Historical design notes for the preceding dual-experience version.** The current authored-world direction is [The living line](docs/design/continuous-world.md), with [asset provenance](docs/design/world-assets.md) and [current verification](docs/design/continuity-qa.md). The section-led layouts and GSAP/shader implementation described below have been superseded.
+
 ## Shared identity, different visitor jobs
 
 Studio is a Decide/Learn surface: explain the offer, show real work and make the next decision comprehensible. Possibilities is an Explore surface: invite curiosity, demonstrate authored interaction and return to a commercial destination. Neither duplicates the other or creates a mandatory funnel.

@@ -4,11 +4,6 @@ Original Reachly artwork and source are authored for this commission.
 Reference sites informed principles; their code and assets are not distributed here.
 Client screenshots remain the respective owners' work; see docs/design/project-imagery.md.
 
-GSAP 3.15.0 / ScrollTrigger
-Standard no-charge license: https://gsap.com/standard-license
-Source: https://github.com/greensock/GSAP
-
-
 Three.js 0.186.1
 The MIT License
 

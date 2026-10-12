@@ -23,7 +23,7 @@ export default defineConfig({
   ],
   webServer: {
     command:
-      "node node_modules/astro/bin/astro.mjs preview --host 127.0.0.1 --port 4321",
+      "node node_modules/astro/bin/astro.mjs preview --host 127.0.0.1 --port 4321 --ignore-lock",
     url: "http://127.0.0.1:4321",
     reuseExistingServer: true,
     timeout: 30000,

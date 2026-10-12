@@ -1,0 +1,19 @@
+---
+import {worldPose} from '../lib/world-state';
+const {mode='studio'}=Astro.props;
+const initial=worldPose(0);
+---
+<div class="world-stage" data-mode={mode} data-phase="0.000" aria-hidden="true">
+  <div class="world-atmosphere">
+    <img class="world-plate world-plate--atelier" src="/images/world/ribbon-atelier.webp" width="1024" height="576" alt="" fetchpriority="high" />
+    <img class="world-plate world-plate--passage" src="/images/world/ribbon-passage.webp" width="1024" height="576" alt="" />
+  </div>
+  <div class="ribbon-world" id={mode==='exhibition'?'signal-art':undefined}></div>
+  <svg class="world-vector signal-fallback" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice">
+    <defs><linearGradient id="ribbon-satin" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#D4E751"/><stop offset=".42" stop-color="#f0f8b4"/><stop offset=".65" stop-color="#D4E751"/><stop offset="1" stop-color="#708c21"/></linearGradient></defs>
+    <path class="world-path world-path--edge" d={initial.path}/><path class="world-path world-path--face" d={initial.path}/>
+    <path class="world-contour" d={initial.path}/><circle class="world-point" cx={initial.pointX} cy={initial.pointY} r="13"/>
+    <g class="world-registration"><path d="M80 72h32m-16-16v32M1500 72h32m-16-16v32M80 828h32m-16-16v32M1500 828h32m-16-16v32"/><circle cx="1080" cy="450" r="260"/><circle cx="1080" cy="450" r="270"/></g>
+  </svg>
+  <div class="world-grain"></div>
+</div>

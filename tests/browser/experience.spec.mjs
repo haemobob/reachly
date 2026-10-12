@@ -58,12 +58,12 @@ test("slashless supporting routes remain navigable", async ({ request }) => {
   ])
     expect((await request.get(route)).status(), route).toBe(200);
 });
-test("Studio never downloads the exhibition renderer", async ({ page }) => {
+test("supporting routes never download the ribbon world", async ({ page }) => {
   const requests = [];
   page.on("request", (r) => requests.push(r.url()));
-  await page.goto("/");
+  await page.goto("/contact/");
   await page.waitForTimeout(800);
-  expect(requests.some((url) => /signal-field|three/i.test(url))).toBe(false);
+  expect(requests.some((url) => /ribbon-world|three/i.test(url))).toBe(false);
 });
 test("chapter links, perspective and example workflow work", async ({
   page,
